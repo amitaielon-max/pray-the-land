@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pray the Land · Havat HaChaim · Golan Heights</title>
+<meta name="description" content="A weekly prayer from the land where it happened. Letters from a farm on the Golan Heights, a wall of watchmen praying for Israel across the world.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#171310; --basalt-2:#211C17; --parchment:#FAF6EC; --parchment-dim:#E8DEC6;
+    --gold:#C9A227; --gold-deep:#7a6420; --olive:#222B16; --ink:#221e19;
+    --warm-white:#EAE2CE;
+    --display:'Cormorant Garamond',Georgia,serif;
+    --body:'Frank Ruhl Libre',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--basalt);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;font-weight:700}
+  .seam{height:3px;background:linear-gradient(90deg,transparent,var(--gold) 18%,var(--gold) 82%,transparent);opacity:.85}
+  section{padding:clamp(56px,9vw,120px) clamp(22px,6vw,80px)}
+  .wrap{max-width:920px;margin:0 auto}
+  h2{font-family:var(--display);font-weight:500;font-size:clamp(30px,5vw,52px);line-height:1.12;letter-spacing:.01em}
+  p{font-size:clamp(16px,1.6vw,18px)}
+  a{color:inherit}
+
+  /* HERO */
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    background:radial-gradient(120% 90% at 50% 118%, #3a2c12 0%, #241a10 32%, var(--basalt) 64%);
+    padding:clamp(40px,8vw,90px) 24px;overflow:hidden}
+  .dawn{position:absolute;left:0;right:0;bottom:0;height:42%;
+    background:radial-gradient(120% 150% at 50% 140%, rgba(201,162,39,.55) 0%, rgba(201,162,39,.10) 38%, transparent 62%);
+    pointer-events:none}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .hero>*{animation:fadeUp 1.1s ease both}
+  .hero .eyebrow{color:var(--gold);animation-delay:.15s}
+  .hero h1{font-family:var(--display);color:var(--warm-white);font-weight:500;
+    font-size:clamp(46px,10vw,108px);line-height:1.02;letter-spacing:.01em;margin:22px 0 0;animation-delay:.45s}
+  .hero .sub{font-family:var(--display);font-style:italic;color:var(--parchment-dim);
+    font-size:clamp(20px,3.4vw,34px);margin-top:14px;animation-delay:1.05s}
+  .hero .verse{color:var(--warm-white);max-width:560px;margin:34px auto 0;font-size:clamp(15px,2vw,18px);
+    font-style:italic;line-height:1.7;animation-delay:1.5s}
+  .hero .vref{color:var(--gold);letter-spacing:.2em;font-size:12px;margin-top:10px;animation-delay:1.95s}
+  .hero .heb{color:var(--gold);direction:rtl;font-size:clamp(16px,2.4vw,22px);margin-top:8px;animation-delay:2.25s}
+  .hero .cta{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation-delay:2.65s}
+  .btn{font-family:var(--body);font-weight:700;font-size:14px;letter-spacing:.06em;text-decoration:none;
+    padding:15px 28px;border-radius:2px;display:inline-block;transition:transform .2s ease,background .2s ease,color .2s ease}
+  .btn-gold{background:var(--gold);color:var(--basalt)}
+  .btn-gold:hover{transform:translateY(-2px);background:#dab634}
+  .btn-ghost{border:1px solid var(--gold);color:var(--gold)}
+  .btn-ghost:hover{background:rgba(201,162,39,.12);transform:translateY(-2px)}
+  .scrollcue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:var(--gold);opacity:.7;font-size:22px;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+
+  /* reveal — progressive enhancement: visible by default, animated only when JS adds .js */
+  .js .rise{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+  .js .rise.in{opacity:1;transform:none}
+
+  /* INVITATION (parchment) */
+  .invite{background:var(--parchment);color:var(--ink);text-align:center}
+  .invite h2{color:var(--basalt)}
+  .invite .lead{font-size:clamp(18px,2.2vw,22px);max-width:680px;margin:22px auto 0;line-height:1.7}
+  .invite .small{color:var(--gold-deep);margin-top:26px;font-style:italic}
+
+  /* READ (basalt) */
+  .read{background:var(--basalt-2);color:var(--parchment-dim);text-align:center}
+  .read h2{color:var(--warm-white)}
+  .read .intro{max-width:620px;margin:18px auto 44px;color:#cabfa6}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:760px;margin:0 auto}
+  .card{background:var(--basalt);border:1px solid #3a322a;padding:34px 28px;text-align:left;border-radius:3px;
+    display:flex;flex-direction:column;transition:border-color .25s ease,transform .25s ease}
+  .card:hover{border-color:var(--gold);transform:translateY(-3px)}
+  .card .k{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .card h3{font-family:var(--display);font-weight:500;font-size:27px;color:var(--warm-white);margin:12px 0 10px}
+  .card p{font-size:15.5px;color:#bbb09a;flex:1}
+  .card .go{margin-top:18px;font-weight:700;font-size:14px;letter-spacing:.05em;color:var(--gold);text-decoration:none}
+  .card .go:hover{text-decoration:underline}
+
+  /* FARM (parchment) */
+  .farm{background:var(--parchment);color:var(--ink)}
+  .farm .wrap{max-width:760px}
+  .farm h2{color:var(--basalt);text-align:center}
+  .farm .lead{text-align:center;max-width:640px;margin:20px auto 38px;font-size:clamp(17px,2vw,19px)}
+  .heal{background:var(--olive);color:var(--parchment);border:1px solid var(--gold);border-radius:3px;
+    padding:clamp(28px,5vw,44px)}
+  .heal .k{color:var(--gold);font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .heal h3{font-family:var(--display);font-weight:500;font-size:clamp(24px,3.4vw,32px);margin:12px 0 14px;color:var(--warm-white)}
+  .heal p{font-size:16.5px;color:#e7e0cf;line-height:1.8}
+
+  /* JOIN (basalt, the form) */
+  .join{background:radial-gradient(120% 100% at 50% 0%, #2a2113 0%, var(--basalt) 60%);color:var(--parchment-dim);text-align:center}
+  .join h2{color:var(--warm-white)}
+  .join .lead{max-width:560px;margin:18px auto 34px;color:#cabfa6}
+  form{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:14px;text-align:left}
+  label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  input{font-family:var(--body);font-size:16px;padding:14px 16px;border:1px solid #4a4133;background:#1d1812;
+    color:var(--parchment);border-radius:2px;width:100%}
+  input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+  .field{display:flex;flex-direction:column;gap:7px}
+  form .btn-gold{margin-top:8px;text-align:center;cursor:pointer;border:none;width:100%;font-family:var(--body)}
+  .formnote{font-size:13px;color:#9a8f79;margin-top:16px;font-style:italic}
+
+  /* SUPPORT (parchment) */
+  .support{background:var(--parchment);color:var(--ink);text-align:center}
+  .support h2{color:var(--basalt)}
+  .support .lead{max-width:560px;margin:18px auto 30px}
+  .paypal{font-weight:700;color:var(--gold-deep)}
+
+  /* FOOTER */
+  footer{background:var(--basalt);color:var(--parchment-dim);text-align:center;padding:64px 24px 54px}
+  footer .word{font-family:var(--display);font-style:italic;font-size:clamp(22px,3.4vw,30px);color:var(--warm-white);line-height:1.6}
+  footer .sig{margin-top:30px;font-size:12px;letter-spacing:.18em;color:#9a8f79;line-height:2.1}
+  footer a{color:var(--gold);text-decoration:none}
+
+  @media(max-width:640px){
+    .cards{grid-template-columns:1fr}
+    section{padding:clamp(48px,12vw,70px) 22px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+    .rise,.hero .eyebrow,.hero h1,.hero .sub,.hero .verse,.hero .vref,.hero .heb,.hero .cta{opacity:1!important;transform:none!important}
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.className+=' js';</script>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="dawn"></div>
+    <div class="eyebrow" id="h-eye">Havat HaChaim · Golan Heights · Israel</div>
+    <h1 id="h-title">Pray the Land</h1>
+    <div class="sub" id="h-sub">A weekly prayer from the land where it happened</div>
+    <p class="verse" id="h-verse">&ldquo;I have posted watchmen on your walls, O Jerusalem. They will never be silent, day or night.&rdquo;</p>
+    <div class="vref" id="h-ref">ISAIAH 62:6</div>
+    <div class="heb" id="h-heb">עַל־חוֹמֹתַיִךְ יְרוּשָׁלִַם הִפְקַדְתִּי שֹׁמְרִים</div>
+    <div class="cta" id="h-cta">
+      <a class="btn btn-gold" href="#join">Join the Wall</a>
+      <a class="btn btn-ghost" href="#read">Read the Letters</a>
+    </div>
+    <div class="scrollcue" id="cue">&#8595;</div>
+  </header>
+
+  <div class="seam"></div>
+
+  <!-- INVITATION -->
+  <section class="invite">
+    <div class="wrap">
+      <h2 class="rise">One letter. One place from the Bible. One prayer we pray together.</h2>
+      <p class="lead rise">Every week a short letter comes from a working farm on the Golan Heights, written by a licensed Israeli guide who has walked Christians through this land for twelve years. One real place where the Gospel happened. One Scripture. One prayer, prayed at the same hour from Israel to homes across the world. A monthly Watchman&rsquo;s Report reads the day&rsquo;s headlines through the Word, the history, and the hope.</p>
+      <p class="small rise">Free. Permission based. The wall only grows.</p>
+    </div>
+  </section>
+
+  <div class="seam"></div>
+
+  <!-- READ -->
+  <section class="read" id="read">
+    <div class="wrap">
+      <h2 class="rise">Read the letters</h2>
+      <p class="intro rise">Every letter we have prayed together lives in one place. Begin anywhere. Read slowly, the way these were meant to be read.</p>
+      <div class="cards">
+        <div class="card rise">
+          <div class="k">The Book</div>
+          <h3>The Book of the Letters</h3>
+          <p>Every letter and every Watchman&rsquo;s Report, gathered into one volume in the basalt and gold of the land. The whole story in one quiet read.</p>
+          <a class="go" href="https://drive.google.com/file/d/1YqQzONcQiRoH1egrXNAsf6GG3NgkCjm9/view" target="_blank" rel="noopener">Open the book &rarr;</a>
+        </div>
+        <div class="card rise">
+          <div class="k">The Letters</div>
+          <h3>Week by Week</h3>
+          <p>The springs of Banias. The roof at Capernaum. The hill of the Beatitudes. The twelve stones of the Jordan. Each week, a new place speaks.</p>
+          <a class="go" href="#join">Receive them weekly &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam"></div>
+
+  <!-- FARM -->
+  <section class="farm">
+    <div class="wrap">
+      <h2 class="rise">Havat HaChaim &mdash; the Farm of Life</h2>
+      <p class="lead rise">Thirty three dunams on a hill in the southern Golan, within sight of the Sea of Galilee. A place of hospitality, retreat, and rest, built by hand through hard years of war and emptied trails. The mountain is still standing, and so is the work.</p>
+      <div class="heal rise">
+        <div class="k">A House of Healing Since October 7</div>
+        <h3>The same hill that welcomes pilgrims now also shelters the broken.</h3>
+        <p>From the day of October 7, even through our own hardest season, the farm gave itself to a calling larger than tourism. We open our gates to the survivors of the Nova festival and to soldiers, families, and wounded souls across Israel who carry the trauma of this war. We hold gatherings of healing here, where the quiet of the Golan, the open sky, and the presence of others who understand begin to mend what the violence tore. That is the truest thing this land does. It heals.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam"></div>
+
+  <!-- JOIN -->
+  <section class="join" id="join">
+    <div class="wrap">
+      <h2 class="rise">Join the wall</h2>
+      <p class="lead rise">Add your name and the letters will reach you. You join a wall of watchmen praying together across the world, never auto-added, always free to step away.</p>
+      <form name="join-the-wall" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="rise" action="/?joined=1">
+        <input type="hidden" name="form-name" value="join-the-wall">
+        <p style="display:none"><label>Leave this empty: <input name="bot-field"></label></p>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" type="text" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Your email</label>
+          <input id="email" type="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="place">Where you pray from <span style="color:#9a8f79;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="place" type="text" name="place" placeholder="City, country">
+        </div>
+        <button class="btn btn-gold" type="submit">Count Me In</button>
+      </form>
+      <p class="formnote rise">Your name comes straight to Tai. No lists sold, no noise, just the weekly letter.</p>
+    </div>
+  </section>
+
+  <div class="seam"></div>
+
+  <!-- SUPPORT -->
+  <section class="support">
+    <div class="wrap">
+      <h2 class="rise">Stand with the farm</h2>
+      <p class="lead rise">The letters are free and always will be. If your heart moves you to help sustain the farm and its work of healing, every gift is received with thanks and prayer.</p>
+      <p class="rise">Give through PayPal at <span class="paypal">amitai.elon@gmail.com</span></p>
+      <p class="small rise" style="color:var(--gold-deep);margin-top:24px;font-style:italic">&ldquo;Go home to your friends and tell them how much the Lord has done for you.&rdquo; &mdash; Mark 5:19</p>
+    </div>
+  </section>
+
+  <div class="seam"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="word">The covenant holds.<br>The gates shall not prevail.</div>
+    <div class="sig">
+      WITH LOVE, AND WITH FAITH<br><br>
+      AMITAI (TAI) ELON · HAVAT HACHAIM · NATUR<br>
+      GOLAN HEIGHTS, ISRAEL<br>
+      <a href="https://wa.me/972544442054">WhatsApp +972&middot;54&middot;444&middot;2054</a> · <a href="mailto:amitai.elon@gmail.com">amitai.elon@gmail.com</a>
+    </div>
+  </footer>
+
+<script>
+  // Scroll reveals
+  (function(){
+    var els=document.querySelectorAll('.rise');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+    },{threshold:.16});
+    els.forEach(function(e){io.observe(e);});
+  })();
+  // Thank-you state after Netlify form redirect
+  (function(){
+    if(location.search.indexOf('joined=1')>-1){
+      var j=document.getElementById('join');
+      if(j){var w=j.querySelector('.wrap');
+        w.innerHTML='<h2 style="color:var(--warm-white)">Welcome to the wall.</h2>'+
+        '<p class="lead" style="margin-top:20px">Your name has reached the hill. The next letter will find you.<br>The same sunset, the same rest, one wall.</p>'+
+        '<p class="formnote">Shalom from the Golan Heights.</p>';
+        j.scrollIntoView();
+      }
+    }
+  })();
+</script>
+</body>
+</html>
