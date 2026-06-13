@@ -128,6 +128,14 @@
 <body>
 <script>document.documentElement.className+=' js';</script>
 
+<!-- Hidden static form so Netlify's build bot always detects it (does not affect the visible page) -->
+<form name="join-the-wall" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name">
+  <input type="email" name="email">
+  <input type="text" name="place">
+  <input type="text" name="bot-field">
+</form>
+
   <!-- HERO -->
   <header class="hero">
     <div class="dawn"></div>
@@ -201,9 +209,10 @@
     <div class="wrap">
       <h2 class="rise">Join the wall</h2>
       <p class="lead rise">Add your name and the letters will reach you. You join a wall of watchmen praying together across the world, never auto-added, always free to step away.</p>
-      <form name="join-the-wall" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="rise" action="/?joined=1">
+      <form name="join-the-wall" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="rise" action="/thank-you.html">
         <input type="hidden" name="form-name" value="join-the-wall">
-        <p style="display:none"><label>Leave this empty: <input name="bot-field"></label></p>
+        <input type="hidden" name="bot-field">
+        <p style="display:none"><label>Leave this empty: <input name="bot-field-2"></label></p>
         <div class="field">
           <label for="name">Your name</label>
           <input id="name" type="text" name="name" autocomplete="name" required>
@@ -256,18 +265,6 @@
       entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
     },{threshold:.16});
     els.forEach(function(e){io.observe(e);});
-  })();
-  // Thank-you state after Netlify form redirect
-  (function(){
-    if(location.search.indexOf('joined=1')>-1){
-      var j=document.getElementById('join');
-      if(j){var w=j.querySelector('.wrap');
-        w.innerHTML='<h2 style="color:var(--warm-white)">Welcome to the wall.</h2>'+
-        '<p class="lead" style="margin-top:20px">Your name has reached the hill. The next letter will find you.<br>The same sunset, the same rest, one wall.</p>'+
-        '<p class="formnote">Shalom from the Golan Heights.</p>';
-        j.scrollIntoView();
-      }
-    }
   })();
 </script>
 </body>
