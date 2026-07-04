@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Films from the Land · Pray the Land</title>
+<meta name="description" content="Short films from the places where it happened. Filmed in the Land by Tai, a farmer and guide on the Golan Heights. Watch free. Reply with your own film. Stand with the Land.">
+
+<link rel="canonical" href="https://pray-the-land-golan.netlify.app/films.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pray-the-land-golan.netlify.app/films.html">
+<meta property="og:title" content="Films from the Land · Pray the Land">
+<meta property="og:description" content="Short films from the places where it happened. Filmed in the Land by Tai, a farmer and guide on the Golan Heights. Watch free. Reply with your own film.">
+<meta property="og:image" content="https://pray-the-land-golan.netlify.app/assets/og-films.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Films from the Land · Pray the Land">
+<meta name="twitter:description" content="Short films from the places where it happened. Watch free. Reply with your own film.">
+<meta name="twitter:image" content="https://pray-the-land-golan.netlify.app/assets/og-films.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#15110D; --basalt-2:#211C17; --basalt-3:#2C2620;
+    --parchment:#FAF6EC; --parchment-dim:#E8DEC6;
+    --gold:#C9A227; --gold-soft:#D9B23F; --gold-deep:#7a6420;
+    --panel:#EFE7CC; --panel-ink:#2b2410;
+    --olive:#222B16; --ink:#221e19; --warm-white:#EAE2CE; --muted:#b3a890;
+    --display:'Cormorant Garamond',Georgia,serif;
+    --body:'Frank Ruhl Libre',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--basalt);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;font-weight:700}
+  section{padding:clamp(56px,8vw,110px) clamp(22px,6vw,80px);position:relative}
+  .wrap{max-width:860px;margin:0 auto}
+  h2{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.6vw,48px);line-height:1.12;letter-spacing:.01em}
+  p{font-size:clamp(16px,1.6vw,18px)}
+  a{color:inherit}
+
+  nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+    padding:14px clamp(20px,5vw,52px);background:rgba(21,17,13,.94);border-bottom:1px solid #3a322a;backdrop-filter:blur(8px)}
+  nav .brand{font-family:var(--display);font-size:21px;color:var(--warm-white);letter-spacing:.02em;text-decoration:none}
+  nav .brand span{color:var(--gold)}
+  nav .links{display:flex;gap:26px;align-items:center}
+  nav .links a{color:var(--parchment-dim);text-decoration:none;font-size:13.5px;letter-spacing:.04em;transition:color .2s}
+  nav .links a:hover{color:var(--gold)}
+  nav .links a.here{color:var(--gold)}
+  nav .links .navjoin{border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:2px}
+  nav .links .navjoin:hover{background:rgba(201,162,39,.14);color:var(--gold)}
+  @media(max-width:680px){ nav .links a:not(.navjoin){display:none} }
+
+  .head{background:radial-gradient(120% 90% at 50% 115%, #3a2c12 0%, #241a10 34%, var(--basalt) 66%);
+    color:var(--warm-white);text-align:center;padding:clamp(70px,10vw,120px) 24px clamp(56px,8vw,90px)}
+  .head .eyebrow{color:var(--gold)}
+  .head h1{font-family:var(--display);font-weight:500;font-size:clamp(44px,8.5vw,86px);line-height:1.05;margin:18px 0 0}
+  .head .sub{font-family:var(--display);font-style:italic;color:var(--parchment-dim);font-size:clamp(19px,3vw,28px);margin-top:14px}
+  .head .intro{max-width:560px;margin:30px auto 0;color:var(--parchment-dim);font-size:clamp(16px,1.8vw,18px);line-height:1.9}
+
+  .seam{height:3px;background:linear-gradient(90deg,transparent,var(--gold) 18%,var(--gold) 82%,transparent);opacity:.85}
+
+  .films{background:var(--basalt-2)}
+  .films h2{color:var(--warm-white);text-align:center}
+  .films .intro{text-align:center;max-width:600px;margin:16px auto 44px;color:var(--muted)}
+  .film-card{background:var(--basalt);border:1px solid #3a322a;border-radius:3px;overflow:hidden;
+    max-width:760px;margin:0 auto 40px;transition:border-color .25s}
+  .film-card:hover{border-color:var(--gold)}
+  .film-card:last-child{margin-bottom:0}
+  .frame{position:relative;aspect-ratio:16/9;background:#0f0c08}
+  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .film-meta{padding:26px 28px 30px}
+  .film-meta .k{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .film-meta h3{font-family:var(--display);font-weight:500;font-size:clamp(24px,3.4vw,32px);color:var(--warm-white);margin:10px 0 8px}
+  .film-meta p{font-size:15.5px;color:var(--muted)}
+
+  .reply{background:var(--parchment);color:var(--ink);text-align:center}
+  .reply h2{color:var(--basalt)}
+  .reply .lead{max-width:600px;margin:20px auto 0;line-height:1.9}
+  .btn{font-family:var(--body);font-weight:700;font-size:14px;letter-spacing:.06em;text-decoration:none;
+    padding:15px 30px;border-radius:2px;display:inline-block;transition:transform .2s ease,background .2s ease}
+  .btn-gold{background:var(--gold);color:var(--basalt)}
+  .btn-gold:hover{transform:translateY(-2px);background:var(--gold-soft)}
+  .btn-ghost{border:1px solid var(--gold);color:var(--gold)}
+  .btn-ghost:hover{background:rgba(201,162,39,.12);transform:translateY(-2px)}
+  .reply .btn{margin-top:32px}
+  .reply .small{color:var(--gold-deep);margin-top:24px;font-style:italic}
+
+  .panel{background:var(--panel);border:2px solid var(--gold);border-radius:3px;color:var(--panel-ink);
+    font-style:italic;max-width:640px;margin:44px auto 0;padding:clamp(24px,4vw,36px);text-align:center}
+  .panel .vtext{font-family:var(--display);font-size:clamp(19px,2.6vw,24px);line-height:1.7}
+  .panel .vref{font-style:normal;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-top:14px;font-weight:700}
+  .panel .heb{direction:rtl;font-size:clamp(17px,2.2vw,21px);margin-top:10px;color:var(--panel-ink)}
+
+  .stand{background:var(--basalt);color:var(--parchment-dim);text-align:center}
+  .stand h2{color:var(--warm-white)}
+  .stand .lead{max-width:560px;margin:20px auto 0;color:var(--muted);line-height:1.9}
+  .stones{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:560px;margin:38px auto 0}
+  .stone{display:block;border:1px solid #4a4133;background:var(--basalt-2);border-radius:3px;
+    padding:22px 12px;text-decoration:none;transition:border-color .25s,transform .25s}
+  .stone:hover{border-color:var(--gold);transform:translateY(-3px)}
+  .stone .amt{display:block;font-family:var(--display);font-size:30px;line-height:1.2;color:var(--warm-white)}
+  .stone .nm{display:block;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:6px}
+  .stand .anyamt{margin-top:26px;font-size:15px;color:var(--muted)}
+  .stand .anyamt a{color:var(--gold);text-decoration:none;font-weight:700}
+  .stand .anyamt a:hover{text-decoration:underline}
+  @media(max-width:480px){.stones{grid-template-columns:1fr;max-width:320px}}
+
+  .church{background:var(--olive);color:var(--parchment);text-align:center}
+  .church h2{color:var(--warm-white)}
+  .church .lead{max-width:620px;margin:20px auto 0;color:#e7e0cf;line-height:1.9}
+  .church .cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+  footer{background:var(--basalt);color:var(--parchment-dim);text-align:center;padding:70px 24px 56px}
+  footer .word{font-family:var(--display);font-style:italic;font-size:clamp(22px,3.4vw,30px);color:var(--warm-white);line-height:1.6}
+  footer .rule{width:90px;height:2px;background:var(--gold);margin:28px auto}
+  footer .sig{font-size:12px;letter-spacing:.16em;color:var(--muted);line-height:2.1}
+  footer a{color:var(--gold);text-decoration:none}
+
+  @media(max-width:480px){
+    .btn{display:block;width:100%;text-align:center}
+    .church .cta{flex-direction:column}
+    .film-meta{padding:20px 18px 24px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/">Pray the <span>Land</span></a>
+  <div class="links">
+    <a href="/">Home</a>
+    <a href="/letters.html">The Letters</a>
+    <a class="here" href="/films.html">The Films</a>
+    <a class="navjoin" href="/#join">Join the Wall</a>
+  </div>
+</nav>
+
+<header class="head">
+  <div class="eyebrow">Pray the Land &middot; from the Golan</div>
+  <h1>Films from the Land</h1>
+  <div class="sub">Short films from the places where it happened</div>
+  <p class="intro">
+    I film these myself, in my own time, in the Land itself.<br>
+    No studio. No stage. Just the ground and the Word.<br>
+    Watch whenever you can. The films are free and they stay free.
+  </p>
+</header>
+
+<div class="seam"></div>
+
+<main>
+<section class="films" id="films">
+  <div class="wrap">
+    <h2>The films</h2>
+    <p class="intro">Each film is one place, one Scripture, one prayer. Watch in your own time. Newest first.</p>
+
+    <!-- FILMS:START -->
+
+    <!-- ============================================================
+      FILM CARD TEMPLATE · copy this whole block to add a new film
+      1. Replace ROMAN_NUM   (episode number, e.g. II)
+      2. Replace PLACE_NAME  (e.g. Beit She'an)
+      3. Replace YOUTUBE_ID  (the unlisted video id from YouTube)
+      4. Replace FILM_TITLE  (e.g. From Darkness to Light)
+      5. Replace the two description lines
+      Paste the new card directly BELOW this comment, ABOVE the
+      previous film, so the newest film always appears first.
+
+    <article class="film-card">
+      <div class="frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/YOUTUBE_ID" title="Film ROMAN_NUM · FILM_TITLE"
+          loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="film-meta">
+        <div class="k">Film ROMAN_NUM &middot; PLACE_NAME</div>
+        <h3>FILM_TITLE</h3>
+        <p>Description line one.<br>Description line two.</p>
+      </div>
+    </article>
+    ============================================================ -->
+
+    <article class="film-card">
+      <div class="frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/YOUTUBE_ID_1" title="Film I · From Darkness to Light"
+          loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="film-meta">
+        <div class="k">Film I &middot; Beit She'an</div>
+        <h3>From Darkness to Light</h3>
+        <p>Beit She'an remembers the darkest night on the wall.<br>We walk from that darkness into the morning the Land still promises.</p>
+      </div>
+    </article>
+
+    <!-- FILMS:END -->
+
+    <div class="panel">
+      <div class="vtext">&ldquo;Behold, He who keeps Israel will neither slumber nor sleep.&rdquo;</div>
+      <div class="vref">Tehillim (Psalms) 121:4</div>
+      <div class="heb">הִנֵּה לֹא־יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל</div>
+    </div>
+  </div>
+</section>
+
+<div class="seam"></div>
+
+<section class="reply" id="reply">
+  <div class="wrap">
+    <h2>Send me your film from your side of the wall</h2>
+    <p class="lead">
+      You watch from your home. I film from the Land.<br>
+      Now answer the same way. One minute on your phone is enough.<br>
+      Where you pray from, what you see, one verse if you like.<br>
+      I watch every one of them personally.
+    </p>
+    <a class="btn btn-gold" href="https://wa.me/972544442054?text=Tai%2C%20I%20am%20sending%20you%20my%20film%20from%20my%20side%20of%20the%20wall">Reply with your film on WhatsApp</a>
+    <p class="small">One tap opens WhatsApp. Attach your film and press send.</p>
+  </div>
+</section>
+
+<div class="seam"></div>
+
+<section class="stand" id="stand">
+  <div class="wrap">
+    <h2>Stand with the Land</h2>
+    <p class="lead">
+      The films are free and they stay free.<br>
+      If your heart moves you to stand with the Land and this work, lay a stone.<br>
+      Every gift is received with thanks and prayer.
+    </p>
+    <div class="stones">
+      <a class="stone" href="https://paypal.me/amitaielon/18"><span class="amt">$18</span><span class="nm">Chai</span></a>
+      <a class="stone" href="https://paypal.me/amitaielon/50"><span class="amt">$50</span><span class="nm">Stone</span></a>
+      <a class="stone" href="https://paypal.me/amitaielon/120"><span class="amt">$120</span><span class="nm">Film</span></a>
+    </div>
+    <p class="anyamt">Or give any amount at <a href="https://paypal.me/amitaielon">paypal.me/amitaielon</a></p>
+  </div>
+</section>
+
+<div class="seam"></div>
+
+<section class="church" id="church">
+  <div class="wrap">
+    <h2>A film for your church</h2>
+    <p class="lead">
+      Your congregation can commission its own film from the Land.<br>
+      You choose the theme. I film it here, in the places where it happened.<br>
+      Delivered within two weeks, carried by a love offering.<br>
+      Write me and we will begin.
+    </p>
+    <div class="cta">
+      <a class="btn btn-gold" href="mailto:amitai.elon@gmail.com?subject=A%20film%20for%20our%20church">Email Tai</a>
+      <a class="btn btn-ghost" href="https://wa.me/972544442054">WhatsApp +972-54-444-2054</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="seam"></div>
+
+<footer>
+  <div class="word">The covenant holds.<br>The gates shall not prevail.</div>
+  <div class="rule"></div>
+  <div class="sig">
+    WITH LOVE, AND WITH FAITH<br><br>
+    AMITAI (TAI) ELON &middot; NATUR FARM<br>GOLAN HEIGHTS, ISRAEL<br>
+    <a href="https://wa.me/972544442054">WhatsApp +972&middot;54&middot;444&middot;2054</a> &middot; <a href="mailto:amitai.elon@gmail.com">amitai.elon@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
