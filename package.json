@@ -2,6 +2,7 @@
   "name": "pray-the-land",
   "private": true,
   "scripts": {
-    "build:films": "node tools/build-films.js"
+    "build:films": "node tools/build-films.js",
+    "letter": "node tools/letter.js"
   }
 }
