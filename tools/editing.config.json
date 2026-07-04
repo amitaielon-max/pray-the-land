@@ -1,0 +1,76 @@
+{
+  "rawDir": "raw-films",
+  "usedDirName": "used",
+  "driveRawFolder": {
+    "name": "Raw Films",
+    "id": "1OVbHIYPvg6Jcffx1F7uv4jShuMLD4Z3e",
+    "note": "Tai drops raw phone clips here. In cloud sessions Claude fetches them into rawDir; on a local machine point rawDir at the Google Drive for Desktop synced folder instead."
+  },
+  "outputDir": "output",
+  "musicDir": "assets/music",
+  "cardsDir": "assets/cards",
+  "fontsDir": "tools/editing/fonts",
+
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "masterCrf": 18,
+    "masterPreset": "slow",
+    "mezzanineCrf": 14,
+    "maxPushIn": 1.10
+  },
+
+  "grade": {
+    "note": "One gentle warm grade, identical on every film. Slight lift in shadows, warmth up, saturation modest.",
+    "filter": "curves=all='0/0.028 0.5/0.51 1/1',colortemperature=temperature=5900:mix=0.55,eq=saturation=1.07:contrast=1.01"
+  },
+
+  "audio": {
+    "speechLufs": -16,
+    "truePeak": -1.5,
+    "lra": 11,
+    "musicLufsMin": -28,
+    "musicLufsMax": -24,
+    "ducking": "sidechaincompress=threshold=0.02:ratio=8:attack=5:release=400:makeup=1"
+  },
+
+  "cards": {
+    "navy": "#14213d",
+    "gold": "#C9A227",
+    "cream": "#fdfcf8",
+    "titleCardSeconds": 3.5,
+    "titleCrossfadeSeconds": 0.5,
+    "closingCardSeconds": 8
+  },
+
+  "lowerThird": {
+    "seconds": 4,
+    "fontSize": 44,
+    "marginLeft": 90,
+    "marginBottom": 96
+  },
+
+  "captions": {
+    "font": "Frank Ruhl Libre Medium",
+    "fontSize": 15,
+    "note": "Burned in, bottom center, cream on 55 percent navy strip, serif, max 2 lines, no word-by-word pop. Keep the spoken language. Hebrew verse: Hebrew first line, English in parentheses on the second.",
+    "forceStyle": "FontName=Frank Ruhl Libre Medium,FontSize=15,PrimaryColour=&H00F8FCFD,OutlineColour=&H733D2114,BackColour=&H733D2114,BorderStyle=4,Outline=0,Shadow=1,Alignment=2,MarginV=36,WrapStyle=2"
+  },
+
+  "editingGrammar": {
+    "structure": ["hook", "arrival", "walk", "turn", "close"],
+    "hookSeconds": [8, 15],
+    "lengthMinutes": [3, 8],
+    "cutSilenceOverSeconds": 0.7,
+    "maxSilenceSeconds": 1.5,
+    "law": "Keep breath, pauses before important lines, and imperfections. The stumbles are the voice. No whip cuts, no beat-synced editing, no meme grammar. Slow down at the Scripture turn and show the land, not his face. Never pad."
+  },
+
+  "whisper": {
+    "preferred": "faster-whisper",
+    "model": "small",
+    "task": "transcribe",
+    "note": "Never translate inside captions. Model download needs huggingface.co (faster-whisper) or openaipublic.azureedge.net (openai-whisper) reachable from the session."
+  }
+}

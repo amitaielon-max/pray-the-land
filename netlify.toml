@@ -9,3 +9,9 @@
   from = "/stand.html"
   to = "/films.html#stand"
   status = 301
+
+# short URL printed on the films' closing card
+[[redirects]]
+  from = "/films"
+  to = "/films.html"
+  status = 301

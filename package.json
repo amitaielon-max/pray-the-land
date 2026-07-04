@@ -3,6 +3,12 @@
   "private": true,
   "scripts": {
     "build:films": "node tools/build-films.js",
-    "letter": "node tools/letter.js"
+    "letter": "node tools/letter.js",
+    "shotlog": "python3 tools/editing/shotlog.py",
+    "silences": "python3 tools/editing/silences.py",
+    "transcribe": "python3 tools/editing/transcribe.py",
+    "cards": "python3 tools/editing/cards.py",
+    "render:film": "python3 tools/editing/render_film.py",
+    "thumbnail": "python3 tools/editing/thumbnail.py"
   }
 }
