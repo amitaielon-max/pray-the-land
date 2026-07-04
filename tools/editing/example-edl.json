@@ -1,0 +1,21 @@
+{
+  "slug": "example-film",
+  "num": "II",
+  "place": "Beit She'an",
+  "region": "The Decapolis",
+  "title": "An Example Film",
+  "clipsDir": "raw-films",
+  "base": [
+    { "clip": "clip-a.mp4", "in": 42.0, "out": 54.0, "role": "hook", "pushIn": true },
+    { "clip": "clip-b.mp4", "in": 3.0, "out": 12.0, "role": "arrival" },
+    { "clip": "clip-a.mp4", "in": 60.0, "out": 180.0, "role": "walk" },
+    { "clip": "clip-a.mp4", "in": 200.0, "out": 260.0, "role": "turn" },
+    { "clip": "clip-a.mp4", "in": 270.0, "out": 300.0, "role": "close" }
+  ],
+  "broll": [
+    { "clip": "clip-c.mp4", "in": 5.0, "at": 40.0, "duration": 6.0 }
+  ],
+  "captions": "raw-films/captions.srt",
+  "turn": [155.0, 215.0],
+  "music": null
+}

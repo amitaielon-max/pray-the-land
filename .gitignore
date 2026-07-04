@@ -1,2 +1,9 @@
 node_modules/
 letters-out/
+
+# editing room: footage and renders never enter git or Netlify
+output/
+raw-films/
+assets/music/*
+!assets/music/README.md
+__pycache__/
