@@ -77,6 +77,9 @@
   .film-meta .k{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700}
   .film-meta h3{font-family:var(--display);font-weight:500;font-size:clamp(24px,3.4vw,32px);color:var(--warm-white);margin:10px 0 8px}
   .film-meta p{font-size:15.5px;color:var(--muted)}
+  .film-meta .share{margin-top:14px}
+  .film-meta .share a{color:var(--gold);text-decoration:none;font-weight:700;font-size:13.5px;letter-spacing:.04em}
+  .film-meta .share a:hover{text-decoration:underline}
 
   .reply{background:var(--parchment);color:var(--ink);text-align:center}
   .reply h2{color:var(--basalt)}
@@ -163,30 +166,8 @@
     <p class="intro">Each film is one place, one Scripture, one prayer. Watch in your own time. Newest first.</p>
 
     <!-- FILMS:START -->
-
-    <!-- ============================================================
-      FILM CARD TEMPLATE · copy this whole block to add a new film
-      1. Replace ROMAN_NUM   (episode number, e.g. II)
-      2. Replace PLACE_NAME  (e.g. Beit She'an)
-      3. Replace YOUTUBE_ID  (the unlisted video id from YouTube)
-      4. Replace FILM_TITLE  (e.g. From Darkness to Light)
-      5. Replace the two description lines
-      Paste the new card directly BELOW this comment, ABOVE the
-      previous film, so the newest film always appears first.
-
-    <article class="film-card">
-      <div class="frame">
-        <iframe src="https://www.youtube-nocookie.com/embed/YOUTUBE_ID" title="Film ROMAN_NUM · FILM_TITLE"
-          loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      </div>
-      <div class="film-meta">
-        <div class="k">Film ROMAN_NUM &middot; PLACE_NAME</div>
-        <h3>FILM_TITLE</h3>
-        <p>Description line one.<br>Description line two.</p>
-      </div>
-    </article>
-    ============================================================ -->
+    <!-- Generated from data/films.json by tools/build-films.js. Do not edit
+         this section by hand: edit data/films.json, then run npm run build:films -->
 
     <article class="film-card">
       <div class="frame">
@@ -198,6 +179,7 @@
         <div class="k">Film I &middot; Beit She'an</div>
         <h3>From Darkness to Light</h3>
         <p>Beit She'an remembers the darkest night on the wall.<br>We walk from that darkness into the morning the Land still promises.</p>
+        <p class="share"><a href="/f/from-darkness-to-light.html">Share this film &rarr;</a></p>
       </div>
     </article>
 

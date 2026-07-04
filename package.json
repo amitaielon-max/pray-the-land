@@ -1,0 +1,7 @@
+{
+  "name": "pray-the-land",
+  "private": true,
+  "scripts": {
+    "build:films": "node tools/build-films.js"
+  }
+}
