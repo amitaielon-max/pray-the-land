@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letters from the Land · Read the Book · Pray the Land</title>
+<meta name="description" content="The complete book, free to read. Thirteen letters from the Golan Heights, designed like the printed edition.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #1a1e23;
+    --night-2: #23282e;
+    --gold: #c9a45c;
+    --gold-soft: #b39355;
+    --gold-ink: #8a6f3a;
+    --paper: #f7f2e7;
+    --paper-line: #e2d8c2;
+    --ink: #2b261e;
+    --ink-soft: #5b5342;
+    --stone: #8d97a3;
+    --olive: #232b16;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px clamp(20px, 5vw, 52px);
+    background: rgba(26,30,35,.95);
+    border-bottom: 1px solid rgba(141,151,163,.25);
+    backdrop-filter: blur(8px);
+  }
+  nav .brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--paper); text-decoration: none; }
+  nav .brand span { color: var(--gold); }
+  nav .links { display: flex; gap: 22px; align-items: center; }
+  nav .links a { color: var(--stone); text-decoration: none; font-size: 13.5px; letter-spacing: .04em; }
+  nav .links a:hover { color: var(--gold); }
+
+  /* ---------- the cover ---------- */
+  .cover {
+    background: linear-gradient(var(--night-2) 45%, var(--night));
+    color: var(--paper);
+    text-align: center;
+    min-height: 88vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 5rem 1.5rem;
+  }
+  .cover .house {
+    font-size: .78rem; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--stone); margin-bottom: 2.6rem;
+  }
+  .cover .compass { color: var(--gold); font-size: 1.3rem; margin-bottom: 1.4rem; }
+  .cover h1 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: clamp(2.6rem, 7vw, 4.6rem); letter-spacing: .06em;
+    color: var(--gold); line-height: 1.1; text-transform: uppercase;
+  }
+  .cover .rule { width: 5.5rem; height: 1px; background: var(--gold-soft); margin: 1.7rem auto; }
+  .cover .sub {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(1.25rem, 3vw, 1.6rem); color: var(--paper);
+  }
+  .cover .author { margin-top: 3rem; font-size: .95rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  .cover .address { margin-top: .4rem; font-size: .9rem; color: var(--stone); }
+  .cover .cta { margin-top: 3rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: .8rem 1.9rem;
+    font-size: 1rem; letter-spacing: .05em; text-decoration: none; border-radius: 2px;
+  }
+  .btn-gold { background: var(--gold); color: var(--night); }
+  .btn-gold:hover { background: var(--paper); }
+  .btn-ghost { border: 1px solid var(--gold-soft); color: var(--gold); }
+  .btn-ghost:hover { background: rgba(201,164,92,.12); }
+
+  /* ---------- book pages ---------- */
+  .page { max-width: 40rem; margin: 0 auto; padding: 4.5rem 1.5rem; }
+  .dedication { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; line-height: 2; color: var(--ink-soft); }
+  .dedication .gap { display: block; height: 1.6rem; }
+
+  .toc { text-align: center; }
+  .toc h2, .chapter-head h2 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    letter-spacing: .18em; font-size: 1.1rem; color: var(--gold-ink); text-transform: uppercase;
+  }
+  .toc .rule, .chapter .rule { width: 3.5rem; height: 1px; background: var(--gold-ink); margin: 1.4rem auto 2.2rem; opacity: .6; }
+  .toc ol { list-style: none; }
+  .toc li { padding: .45rem 0; }
+  .toc a { color: var(--ink); text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; }
+  .toc a:hover { color: var(--gold-ink); }
+  .toc .n { color: var(--gold-ink); font-family: 'EB Garamond', serif; font-size: .95rem; letter-spacing: .12em; margin-right: .7rem; }
+
+  .chapter { max-width: 40rem; margin: 0 auto; padding: 4.5rem 1.5rem 3.5rem; border-top: 1px solid var(--paper-line); scroll-margin-top: 70px; }
+  .chapter .num { text-align: center; color: var(--gold-ink); letter-spacing: .3em; font-size: .95rem; }
+  .chapter h2.title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600; text-align: center;
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem); color: var(--ink); line-height: 1.15; margin-top: .7rem;
+    letter-spacing: .02em;
+  }
+  .chapter .place {
+    text-align: center; font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-soft); margin-top: .8rem;
+  }
+  .scripture {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; text-align: center;
+    font-size: 1.35rem; line-height: 1.6; max-width: 33rem; margin: 2.2rem auto .5rem; color: var(--ink);
+  }
+  .ref { text-align: center; font-size: .78rem; letter-spacing: .24em; color: var(--gold-ink); }
+  .body { margin-top: 2.6rem; }
+  .body p { margin-bottom: 1.35rem; }
+  .body > p:first-child::first-letter {
+    font-family: 'Cormorant Garamond', serif; font-weight: 500;
+    float: left; font-size: 3.4em; line-height: .82; padding: .06em .12em 0 0; color: var(--gold-ink);
+  }
+  .body em { font-style: italic; }
+
+  .stone h3 {
+    font-family: 'EB Garamond', serif; font-size: .95rem; letter-spacing: .22em;
+    color: var(--gold-ink); margin: 2rem 0 .5rem; text-transform: uppercase;
+  }
+  .stone .v { font-style: italic; color: var(--ink-soft); margin-top: .4rem; }
+
+  .pray {
+    background: var(--olive); border: 1px solid var(--gold-soft); border-radius: 3px;
+    padding: 1.9rem 2rem; margin-top: 2.4rem; text-align: center;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .pray .lbl { font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; }
+  .pray .text { font-family: 'Cormorant Garamond', serif; font-style: italic; color: #ece4d0; font-size: 1.25rem; line-height: 1.85; }
+
+  /* ---------- closing ---------- */
+  .colophon {
+    background: linear-gradient(var(--night) 55%, var(--night-2));
+    color: var(--paper); text-align: center; padding: 6rem 1.5rem;
+  }
+  .colophon .word { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.5rem, 3.4vw, 2rem); color: var(--paper); line-height: 1.7; }
+  .colophon .tai { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold); margin-top: 2.2rem; }
+  .colophon .sig { margin-top: 2.4rem; font-size: .88rem; color: var(--stone); line-height: 2; }
+  .colophon a { color: var(--gold); text-decoration: none; }
+  .colophon .home { margin-top: 2.6rem; }
+  .colophon .home a { border: 1px solid var(--gold-soft); padding: .75rem 1.8rem; border-radius: 2px; font-size: .95rem; letter-spacing: .05em; }
+  .colophon .home a:hover { background: rgba(201,164,92,.12); }
+
+  /* ---------- print: the book itself ---------- */
+  @media print {
+    @page { size: 6in 9in; margin: .72in .62in; }
+    body { font-size: 11.5pt; line-height: 1.7; background: #fff; }
+    nav, .webonly { display: none !important; }
+    .cover {
+      min-height: auto; height: 100%;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      break-after: page;
+    }
+    .page { break-after: page; padding: 3rem 0; max-width: none; }
+    .dedication { padding-top: 6rem; }
+    .chapter { break-before: page; border-top: none; padding: 0 0 1rem; max-width: none; }
+    .pray { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .colophon {
+      break-before: page; height: 100%;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .toc a { color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="webonly">
+  <a class="brand" href="index.html">Pray the <span>Land</span></a>
+  <div class="links">
+    <a href="book.html">The Book</a>
+    <a href="index.html">&larr; Back to the hill</a>
+  </div>
+</nav>
+
+<header class="cover">
+  <p class="house">Pray the Land</p>
+  <div class="compass" aria-hidden="true">&#10022;</div>
+  <h1>Letters from<br>the Land</h1>
+  <div class="rule"></div>
+  <p class="sub">Thirteen letters from the Land of the Bible</p>
+  <p class="author">Amitai (Tai) Elon</p>
+  <p class="address">Havat HaChaim · Natur · Golan Heights, Israel<br>pray-the-land-tai-golan.netlify.app</p>
+  <div class="cta webonly">
+    <a class="btn btn-gold" href="#letter-01">Begin reading</a>
+    <a class="btn btn-ghost" href="letters-from-the-land.pdf">Download the PDF</a>
+  </div>
+</header>
+
+<section class="page dedication">
+  <p>For the Watchmen on the wall,<br>who never went silent, day or night.</p>
+  <span class="gap"></span>
+  <p>And for my father, Rabbi Benny Elon,<br>who told the church: you are not strangers here.</p>
+</section>
+
+<section class="page toc">
+  <h2>The Letters</h2>
+  <div class="rule"></div>
+  <ol>
+    <li><a href="#letter-01"><span class="n">01</span>Standing at the Gates of Hades</a></li>
+    <li><a href="#letter-02"><span class="n">02</span>The Four Friends of Capernaum</a></li>
+    <li><a href="#letter-03"><span class="n">03</span>The Hill That Blesses the Broken</a></li>
+    <li><a href="#letter-04"><span class="n">04</span>What Do These Stones Mean?</a></li>
+    <li><a href="#letter-05"><span class="n">05</span>The First Messenger</a></li>
+    <li><a href="#letter-06"><span class="n">06</span>Four Stones from the Wall</a></li>
+    <li><a href="#letter-07"><span class="n">07</span>The Night the Watchman Rests</a></li>
+    <li><a href="#letter-08"><span class="n">08</span>The Man on the Hill</a></li>
+    <li><a href="#letter-09"><span class="n">09</span>Three Stones from the Wall</a></li>
+    <li><a href="#letter-10"><span class="n">10</span>What the Watchman Sees</a></li>
+    <li><a href="#letter-11"><span class="n">11</span>The Mountain That Waits</a></li>
+    <li><a href="#letter-12"><span class="n">12</span>The Emptiest Place in the World</a></li>
+    <li><a href="#letter-13"><span class="n">13</span>The Harbor Where Your Story Set Sail</a></li>
+  </ol>
+</section>
+
+<article class="chapter" id="letter-01">
+  <p class="num">· 01 ·</p>
+  <h2 class="title">Standing at the Gates of Hades</h2>
+  <p class="place">Week One · Caesarea Philippi · The Springs of Banias</p>
+  <p class="scripture">&ldquo;On this rock I will build my church, and the gates of Hades shall not prevail against it.&rdquo;</p>
+  <p class="ref">MATTHEW 16:18</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>An hour north of my farm there is a cliff with water pouring out of it. In the days of Jesus it was covered with pagan shrines. People called the cave there the gate of Hades.</p>
+    <p>Jesus took His disciples to that exact spot. He stood them in front of the darkest place in the land and asked, <em>Who do you say I am?</em></p>
+    <p>He did not ask it in a synagogue. He asked it at the enemy&rsquo;s front door.</p>
+    <p>I have stood at that cliff a hundred times with pilgrims. Today the trails are empty. The border is loud. But the rock is still standing. It always is.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, we stand together at the gates.<br>You said the gates shall not prevail. So we are not afraid of gates.<br>Guard this land. Guard these families. Guard Your church.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-02">
+  <p class="num">· 02 ·</p>
+  <h2 class="title">The Four Friends of Capernaum</h2>
+  <p class="place">Week Two · Capernaum · The Town of Jesus</p>
+  <p class="scripture">&ldquo;When Jesus saw their faith, he said to the paralyzed man, Son, your sins are forgiven.&rdquo;</p>
+  <p class="ref">MARK 2:5</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>Twenty minutes from my farm, on the north shore of the Sea of Galilee, sit the black basalt ruins of Capernaum. This was His town.</p>
+    <p>One day the house was so crowded no one could get in. So four friends climbed onto the roof carrying a paralyzed man. They tore the roof open with their hands and lowered their friend down to Jesus.</p>
+    <p>When Jesus saw <em>their</em> faith. Not the faith of the sick man. The faith of the friends who carried him.</p>
+    <p>That is what you did for me and my family these past weeks. You were the four friends. I was the man on the mat.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, we come to You carrying each other.<br>Whoever cannot carry their own weight today, we lower them to You right now, through the roof if we must.<br>See our faith. Heal our friend.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-03">
+  <p class="num">· 03 ·</p>
+  <h2 class="title">The Hill That Blesses the Broken</h2>
+  <p class="place">Week Three · The Mount of Beatitudes · Above the Sea of Galilee</p>
+  <p class="scripture">&ldquo;Blessed are those who mourn, for they shall be comforted.&rdquo;</p>
+  <p class="ref">MATTHEW 5:4</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>From my farm I can drive down to a green hill that slopes gently toward the Sea of Galilee. On that slope Jesus sat down and gave the greatest sermon ever spoken.</p>
+    <p>The hill is shaped like an amphitheater. The breeze carries a voice downhill across the grass. The land itself helped Him preach.</p>
+    <p>And the first thing He did was bless the people nobody blesses. The poor in spirit. The mourners. The meek. Not the winners. The wounded.</p>
+    <p>On that hill, mourning is not the end of the sentence. <em>For they shall be comforted.</em> That is a promise spoken over this soil. It is still in force.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, You blessed the mourners before You blessed anyone else.<br>So we bring You ours. Every empty chair. Every heavy heart.<br>Comfort them the way only You can.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-04">
+  <p class="num">· 04 ·</p>
+  <h2 class="title">What Do These Stones Mean?</h2>
+  <p class="place">Week Four · The Jordan River · The Twelve Stones</p>
+  <p class="scripture">&ldquo;When your children ask, What do these stones mean? Tell them.&rdquo;</p>
+  <p class="ref">JOSHUA 4:6</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>East of my farm the land falls toward the Jordan. The river where Israel crossed into the promise. The river where Jesus went under the water and the heavens opened.</p>
+    <p>When Joshua led the people across, God told him to take twelve stones from the riverbed and stack them on the bank. Not a monument for God. A question for children.</p>
+    <p><em>When your children ask, what do these stones mean, tell them.</em> Tell them what the Lord did here.</p>
+    <p>Every answered prayer in your life is a stone too. The question is whether you stacked it where your children can see it.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, You commanded us to remember out loud.<br>So today we stack our stones.<br>Let our children find our faith standing on the riverbank.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-05">
+  <p class="num">· 05 ·</p>
+  <h2 class="title">The First Messenger</h2>
+  <p class="place">A Letter from the Land · Kursi · The Eastern Shore · Below the Golan</p>
+  <p class="scripture">&ldquo;Go home to your friends and tell them how much the Lord has done for you.&rdquo;</p>
+  <p class="ref">MARK 5:19</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>Below my hill, on the eastern shore of the Sea of Galilee, there is a quiet ruin called Kursi. This is where Jesus stepped out of the boat and met the man no chains could hold. And healed him with a word.</p>
+    <p>The man begged to follow. And Jesus said no. Go home to your friends and tell them how much the Lord has done for you.</p>
+    <p>The first messenger Jesus ever sent was not a priest. He was a local man with a hard story and a healed heart.</p>
+    <p>I live above that shore. I am a local man with a hard story too. And these letters are me obeying that same verse.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, You crossed a stormy sea for one broken man.<br>Heal what no chains can hold in our lives.<br>And make every one of us a messenger.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-06">
+  <p class="num">· 06 ·</p>
+  <h2 class="title">Four Stones from the Wall</h2>
+  <p class="place">The Watchman&rsquo;s Report · Edition One</p>
+  <p class="scripture">&ldquo;I have posted watchmen on your walls, O Jerusalem.&rdquo;</p>
+  <p class="ref">ISAIAH 62:6</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>A watchman has two jobs. To see what is coming. And to say what the Word already said about it.</p>
+    <div class="stone">
+      <h3>Stone One · Persia</h3>
+      <p class="sees">The watchman sees: one hundred days of war between Israel and Iran. Now whispers of a deal.</p>
+      <p class="v">&ldquo;I will bring again the captivity of Elam, saith the LORD.&rdquo; · Jeremiah 49:39</p>
+    </div>
+    <div class="stone">
+      <h3>Stone Two · The Seas</h3>
+      <p class="sees">The watchman sees: the Strait of Hormuz shut, the Red Sea barred.</p>
+      <p class="v">&ldquo;The children of Israel went into the midst of the sea upon the dry ground.&rdquo; · Exodus 14:22</p>
+    </div>
+    <div class="stone">
+      <h3>Stone Three · Lebanon</h3>
+      <p class="sees">The watchman sees: a fragile ceasefire on the northern border.</p>
+      <p class="v">&ldquo;The voice of the LORD breaketh the cedars of Lebanon.&rdquo; · Psalm 29:5</p>
+    </div>
+    <div class="stone">
+      <h3>Stone Four · The Table of the Kings</h3>
+      <p class="sees">The watchman sees: a dozen nations near a signing table.</p>
+      <p class="v">&ldquo;He maketh wars to cease unto the end of the earth.&rdquo; · Psalm 46:9</p>
+    </div>
+    <div class="stone">
+      <h3>The Watchman&rsquo;s Word</h3>
+      <p class="sees">The covenant holds. The gates shall not prevail.</p>
+    </div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-07">
+  <p class="num">· 07 ·</p>
+  <h2 class="title">The Night the Watchman Rests</h2>
+  <p class="place">Shabbat Shalom · From the Golan Heights</p>
+  <p class="scripture">&ldquo;Behold, He who keeps Israel shall neither slumber nor sleep.&rdquo;</p>
+  <p class="ref">PSALM 121:4</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>Friends,</p>
+    <p>The sun is going down over the Golan right now. In a few minutes, this farm stops. The tools are set down. The phone goes quiet. The week lets go.</p>
+    <p>I want to tell you what Shabbat really is. It is not a day off. It is a surrender.</p>
+    <p>Six days we watch. We build. We carry. We hold the world up with our worry. And on the seventh day God commands us to do the bravest thing a human being can do. Open your hands. Let go. And trust that the world keeps turning without you.</p>
+    <p>Shabbat is how we say to the Almighty, You lead now. The farm is Yours. The borders are Yours. The children are Yours. We were never holding the world. We were only invited to help, six days at a time.</p>
+    <p>And here is the secret of the watchmen. Even the watchman rests on Shabbat. Because the verse above is true. The Keeper of Israel never slumbers and never sleeps. When you rest, you are not leaving your post. You are handing the watch to the One who never needed to be relieved.</p>
+    <p>That is the infinity we step into tonight. Not emptiness. Fullness. One day a week, we rest inside the truth that He is God and we are not. And everything in us that was clenched all week finally breathes.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, the sun is setting and we open our hands.<br>Take the week from us. Take the worry from us.<br>Lead Your world tonight while we rest in You.<br>Keeper of Israel, keep us all.<br>Shabbat Shalom.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-08">
+  <p class="num">· 08 ·</p>
+  <h2 class="title">The Man on the Hill</h2>
+  <p class="place">A Letter from the Land · An Introduction · Havat HaChaim, Golan Heights</p>
+  <p class="scripture">&ldquo;As one whom his mother comforteth, so will I comfort you; and ye shall be comforted in Jerusalem.&rdquo;</p>
+  <p class="ref">ISAIAH 66:13</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>For weeks now I have written to you about a cliff, a roof, a hill, a river. You have been praying alongside a voice without a face. So today I want to stop sending you prayers for a moment. And simply introduce myself.</p>
+    <p>My name is Amitai Elon. Everyone calls me Tai. I was born in this country in 1979, and for more than twelve years I have guided people across it. Mostly Christians. Mostly pilgrims. Many of you walked these hills with me, which is the only reason you are reading this at all.</p>
+    <p>I live in Natur, in the southern Golan, on a farm called Havat HaChaim. The Farm of Life. Thirty three dunams on a hill within sight of the Sea of Galilee. It was built to be a place where tired people come to breathe. Geodesic domes under a sky full of stars. A long table. Strangers who leave as family.</p>
+    <p>I am a father. Oriya is eighteen and already braver than I am. Eliya is sixteen and carries his grandfather&rsquo;s stubbornness like an inheritance. Yaheli is eleven and still believes the whole world is good. I would burn down anything to keep her believing it.</p>
+    <p>And I am a son. My father was Rabbi Benny Elon. Some of you knew him. A few of you have written to tell me so, and every time, it undoes me a little. The work that outlived his titles was building a bridge between the Jewish people and the Christians of the world who love Israel. He spent his years telling the church one sentence. You are not strangers here. You belong to this story.</p>
+    <p>He is gone now, but he is not absent. He is in every word I write, including this one. The ache I feel for my earthly father is the same ache, in a smaller key, that all of us feel for the Father in heaven. My father pointed me to the land. And the land keeps pointing me to the Father who never leaves.</p>
+    <p>I served at nineteen on a cold fortress in Lebanon called Beaufort, where I learned what a watchman is. He is not the strongest man. He is just the one who stays awake so others can sleep.</p>
+    <p>Then came the war. The buses stopped. The pilgrims stopped. The hill went quiet in a way a hill should never be quiet. And in that silence I learned something I should have known all along. This land was never kept alive by the buses. It was kept alive by prayer. By you. By a wall of watchmen scattered across the world who never stopped lifting this place up, even when no plane was landing.</p>
+    <p>And in that same hard season, the farm found a calling larger than tourism. Since October 7 we have opened our gates to the survivors of the Nova festival, and to soldiers and families who carry the trauma of this war. The same hill that welcomes pilgrims now also shelters the broken.</p>
+    <p>That is why these letters exist. Not to ask you for anything. To tell you that your prayers are landing on real soil, in front of a real man, with real children, on a real hill that the Bible still calls by name. You are not praying into the dark. You are praying into the Golan. And the Golan is praying back.</p>
+    <p>So now you know who I am. A guide. A farmer. A father. A son who misses his father. A man on a hill who is astonished, every single week, that you are still standing with him. And I would be honored to pray for you by name too. If you ever want to tell me what to carry for you, just write back. I read every word.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Father, You know each of us by name.<br>Thank You that none of us are strangers in Your story.<br>Comfort the fathers and the children and the ones who miss someone tonight.<br>And keep this strange and beautiful family praying as one.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-09">
+  <p class="num">· 09 ·</p>
+  <h2 class="title">Three Stones from the Wall</h2>
+  <p class="place">The Watchman&rsquo;s Report · Edition Two</p>
+  <p class="scripture">&ldquo;They will never be silent, day or night.&rdquo;</p>
+  <p class="ref">ISAIAH 62:6</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>The watchman reports again from the hill. This month the news moved fast, so I will move fast too. Three stones. Three verses that saw them coming.</p>
+    <div class="stone">
+      <h3>Stone One · The War That Will Not End and Will Not Burn</h3>
+      <p class="sees">The watchman sees: one hundred days of war between Israel and Iran. Both sides keep stepping back from the edge.</p>
+      <p class="v">&ldquo;Nation shall not lift up sword against nation.&rdquo; · Isaiah 2:4</p>
+    </div>
+    <div class="stone">
+      <h3>Stone Two · The Strait and the Belt</h3>
+      <p class="sees">The watchman sees: a belt of power from Hormuz to Bab al-Mandab, the seas of the world&rsquo;s oil.</p>
+      <p class="v">&ldquo;The LORD will utterly destroy the tongue of the Egyptian sea.&rdquo; · Isaiah 11:15</p>
+    </div>
+    <div class="stone">
+      <h3>Stone Three · The Table of Abraham</h3>
+      <p class="sees">The watchman sees: the push to widen the Abraham Accords, to bring Saudi Arabia to the table.</p>
+      <p class="v">&ldquo;In thee shall all families of the earth be blessed.&rdquo; · Genesis 12:3</p>
+    </div>
+    <div class="stone">
+      <h3>The Watchman&rsquo;s Word</h3>
+      <p class="sees">The world reads chaos. The watchman reads a script written long ago, still holding. The covenant holds. The gates shall not prevail.</p>
+    </div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-10">
+  <p class="num">· 10 ·</p>
+  <h2 class="title">What the Watchman Sees</h2>
+  <p class="place">A Word for the Wall</p>
+  <p class="scripture">&ldquo;I have posted watchmen on your walls, O Jerusalem. They will never be silent, day or night.&rdquo;</p>
+  <p class="ref">ISAIAH 62:6</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>The world has one set of eyes. The watchman has another.</p>
+    <p>When the news shows you this land, it shows you smoke. Missiles over the cities. Soldiers on the ridges. Headlines that climb your chest like a fever. That is what the camera sees. And it is real. A watchman never pretends it isn&rsquo;t.</p>
+    <p>But you were not posted on the wall to repeat the news. You were posted to see what the news cannot.</p>
+    <p>Listen to how the Lord describes you. &ldquo;I have posted watchmen on your walls, O Jerusalem. They will never be silent, day or night.&rdquo; (Isaiah 62:6) That is not a hobby. That is a post. You did not wander onto this wall. You were stationed here.</p>
+    <p>And a watchman&rsquo;s first gift is not his voice. It is his sight.</p>
+    <p>There is a night in the book of Kings I cannot stop thinking about. The prophet Elisha is surrounded. An army has come in the dark, horses and chariots circling the city, and his servant wakes, looks over the wall, and his heart falls out of his chest. &ldquo;Alas, my master. What shall we do?&rdquo; And Elisha says the strangest thing. &ldquo;Those who are with us are more than those who are with them.&rdquo; The servant looks again. He sees the same enemy. The same impossible odds. So Elisha prays one short prayer. &ldquo;Lord, open his eyes, that he may see.&rdquo; And the young man looks a third time. And the mountain is full. Full of horses and chariots of fire, all around the prophet. (2 Kings 6:15-17)</p>
+    <p>The army was always there. He just couldn&rsquo;t see it.</p>
+    <p>That is the watchman&rsquo;s point of view. Same battlefield. Different sight.</p>
+    <p>The world looks at this land and counts the missiles. The watchman looks at the same hills and remembers they are full of fire the cameras cannot film.</p>
+    <p>Because there is a Watchman over this land who never blinks. &ldquo;Behold, He who keeps Israel will neither slumber nor sleep.&rdquo; (Psalm 121:4) Some of you take the night shift on purpose, praying while your town sleeps. You do it because you know the One you keep watch with took the night shift first. He has not closed His eyes over this land for one second in four thousand years.</p>
+    <p>And the watchman remembers the deed. Babylon is gone. Rome is gone. Every empire that planted a flag on these stones is dust under a farmer&rsquo;s boot now. The land remained. The people the world buried a hundred times keep standing back up. Ezekiel saw it before it happened. A valley of bones, very many, very dry. &ldquo;Can these bones live?&rdquo; And then the rattling. And the sinew. And the breath. And a whole nation on its feet that had no business existing. In 1948 that prophecy walked off the page and put on a flag. The covenant holds. Heaven&rsquo;s deeds do not expire when the news cycle turns.</p>
+    <p>And do not forget where we first stood together. At a cliff in the north, where the Lord said the gates of hell would not prevail against His church. (Matthew 16:18) Hear it again. Gates do not attack. Gates defend. We are not the besieged. We are the ones standing at the gate.</p>
+    <p>So this is the watchman&rsquo;s point of view, and it is yours now.</p>
+    <p>You are not a spectator, refreshing the news with your stomach in a knot. You are stationed on a wall. When you pray from your kitchen, your car, your bed at midnight, you are not whispering into the dark. You are taking your watch. And the watch does not go quiet because the hour is inconvenient or the heart is tired. Day or night, He said.</p>
+    <p>So see the smoke. Name it honestly. The soldier, the child, the stranger, the frightened on every side of every border. Pray for the peace of Jerusalem, the wholeness only God can give. (Psalm 122:6) And then lift your eyes higher than the smoke.</p>
+    <p>Those who are with us are more than those who are with them.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, open our eyes that we may see.<br>Show us the fire on the hills the cameras cannot film.<br>Keep us faithful on the wall. Unsilent. Unafraid.<br>Guard the innocent on every side.<br>The covenant holds. The gates shall not prevail.<br>And until they fall, we will not be silent, day or night.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-11">
+  <p class="num">· 11 ·</p>
+  <h2 class="title">The Mountain That Waits</h2>
+  <p class="place">A Letter from Jerusalem · The Mount of Olives · East of the Old City</p>
+  <p class="scripture">&ldquo;And his feet shall stand in that day upon the mount of Olives, which is before Jerusalem on the east, and the mount of Olives shall cleave in the midst thereof.&rdquo;</p>
+  <p class="ref">ZECHARIAH 14:4</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>Two hours south of my farm there is a mountain that does nothing but wait.</p>
+    <p>The Mount of Olives stands east of the Old City, looking straight at the Temple Mount across the Kidron Valley. When I bring pilgrims to its summit at first light, the whole of Jerusalem lies below in gold, and even the loudest group goes silent. The city does that to people. It always has.</p>
+    <p>Everything about this mountain is arrival and return. Jesus came down its slope on a donkey while the crowds spread branches. Halfway down He stopped, looked at the city, and wept over it. At its foot lies Gethsemane, where the oldest olive trees in the land still stand, and where He prayed the hardest prayer ever prayed. Not my will, but Yours.</p>
+    <p>And from this same mountain He left. The book of Acts says He ascended from the Mount of Olives, and as the disciples stood staring at the sky, two men in white asked them the greatest question of waiting. Why stand ye gazing up into heaven? This same Jesus shall so come in like manner as ye have seen him go.</p>
+    <p>In like manner. Same direction. Same mountain.</p>
+    <p>That is why the prophet Zechariah wrote the verse at the top of this letter. On that day His feet stand on the Mount of Olives, and the mountain splits in two, east to west, a great valley opening where a ridge now stands. An earthquake written into the deed of the land, scheduled by heaven, still pending.</p>
+    <p>And here is what moves me most as a Jew standing on that slope. For close to three thousand years, my people have buried their dead on the western face of this mountain. Tens of thousands of graves, all facing the city. Why there? Because of that verse. Because generation after generation believed the resurrection begins where His feet touch down, and they wanted to be first in line.</p>
+    <p>Think about that. A cemetery built entirely out of hope. Grave after grave saying the same sentence. We believe the story is not over.</p>
+    <p>The world sees a hill covered with old stones. The watchman sees a mountain holding its breath.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, teach us to wait like that mountain waits.<br>Certain. Facing the city. Ready.<br>Comfort everyone who buried someone in hope.<br>And come in like manner, as You said.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-12">
+  <p class="num">· 12 ·</p>
+  <h2 class="title">The Emptiest Place in the World</h2>
+  <p class="place">A Letter from Jerusalem · The Church of the Holy Sepulchre · Golgotha and the Tomb</p>
+  <p class="scripture">&ldquo;He is not here: for he is risen, as he said. Come, see the place where the Lord lay.&rdquo;</p>
+  <p class="ref">MATTHEW 28:6</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>Inside the Old City of Jerusalem stands the strangest holy site on earth.</p>
+    <p>Every other shrine in the world is famous for what it contains. A relic. A tomb. A body. The Church of the Holy Sepulchre is famous for what it does not contain. Its whole treasure is an absence. Pilgrims cross oceans, stand in line for hours, bend low through a small stone doorway, and come out weeping because of what they did not find.</p>
+    <p>He is not here.</p>
+    <p>Under that one roof are the two ends of the story. A rocky rise the Romans called Golgotha, the place of the skull, where the cross stood. And a few steps away, a garden tomb cut into the rock, donated by a rich man named Joseph who thought he was giving Jesus a grave. He was only lending it. For the weekend.</p>
+    <p>I have guided every kind of Christian through that doorway. And I have watched what the empty space does to them. Because everyone who enters is carrying a grave of their own. A diagnosis. A divorce. A child they are afraid for. A version of themselves they buried years ago. They bend low into the tomb with all of it, and inside there is nothing but hewn stone and morning light. And somehow that nothing says everything.</p>
+    <p>Here is the meaning of resurrection, as plainly as I can say it from this land. Death got reversed on its own field. Paul calls the risen Jesus the firstfruits of them that slept. Firstfruits is a farmer&rsquo;s word, and I am a farmer, so let me translate. When the first fig ripens on my tree, I do not celebrate one fig. I celebrate because the first one proves the whole harvest is coming.</p>
+    <p>One tomb opened. That was the first fig. The harvest is everyone who sleeps in Him.</p>
+    <p>So when you pray for this land, remember what its emptiest place is shouting. The worst thing that ever happened here became the best news the world has ever heard. That is what this soil does with graves.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord, we bend low and bring our graves with us.<br>Every diagnosis. Every loss. Every buried hope.<br>Speak over all of it what the angel spoke.<br>He is not here. He is risen.<br>Amen.</div>
+  </div>
+</article>
+
+<article class="chapter" id="letter-13">
+  <p class="num">· 13 ·</p>
+  <h2 class="title">The Harbor Where Your Story Set Sail</h2>
+  <p class="place">The Last Letter · Caesarea Maritima · The Port on the Great Sea</p>
+  <p class="scripture">&ldquo;Ye shall be witnesses unto me both in Jerusalem, and in all Judaea, and in Samaria, and unto the uttermost part of the earth.&rdquo;</p>
+  <p class="ref">ACTS 1:8</p>
+  <div class="rule"></div>
+  <div class="body">
+    <p>I want to end these letters at the edge of the land. Where the stones stop and the sea begins.</p>
+    <p>On the Mediterranean coast lie the ruins of Caesarea Maritima, the great harbor Herod built into open water. Two thousand years ago it was the front door of this country. Whatever left the land of Israel for the world, left from here.</p>
+    <p>And the greatest thing that ever left, left from here.</p>
+    <p>It began in this city with a Roman officer named Cornelius, a Gentile who prayed to the God of Israel. Peter came down to Caesarea, walked into his house, and the door of the covenant swung open to the nations. Acts chapter ten happened at this harbor. If you are a Christian from the nations, your chapter of the story starts in Caesarea.</p>
+    <p>Years later, Paul stood trial in this same city, and from this same port they put him on a ship. The gospel sailed out of Caesarea&rsquo;s harbor to Cyprus and Crete, to Greece and Rome, and from Rome down every road the empire ever paved. To the ends of the earth, exactly as He said on the Mount of Olives. Eventually, centuries down the current, that same message reached your ancestors. In Ireland or Germany or Korea or Texas. It reached you.</p>
+    <p>Now stand with me on the broken breakwater and hear what I tell every pilgrim who stands there.</p>
+    <p>You did not come to Israel as a tourist. You came back.</p>
+    <p>The faith you carry was born here. The Book you read was written here. The Rabbi you follow walked here. Everything you believe boarded a ship at this harbor and went out looking for you. So when your plane lands in Tel Aviv, thirty minutes up the coast from these ruins, you are not arriving somewhere foreign. You are a letter returning to its sender.</p>
+    <p>That is why these letters exist, and why they now come full circle. For thirteen letters I have written from the land to you. But the truth is older and better than that. Long before I wrote to you, this land wrote itself into you.</p>
+    <p>The gospel went out from Caesarea by ship. Your prayers come back by heaven. The harbor never really closed.</p>
+    <p>Come home whenever you are ready. The long table on my hill is waiting.</p>
+  </div>
+  <div class="pray">
+    <div class="lbl">Let us pray</div>
+    <div class="text">Lord of the harbor, thank You that the story sailed until it found us.<br>Bless every land these letters reach, as this land once blessed it.<br>Bring the nations home to the place their faith was born.<br>And until every ship returns, we will keep the watch.<br>The covenant holds. The gates shall not prevail.<br>Amen.</div>
+  </div>
+</article>
+
+<footer class="colophon">
+  <p class="word">The covenant holds.<br>The gates shall not prevail.</p>
+  <p class="tai">Tai</p>
+  <p class="sig">
+    AMITAI (TAI) ELON<br>
+    Havat HaChaim · Natur · Golan Heights, Israel<br>
+    pray-the-land-tai-golan.netlify.app<br>
+    WhatsApp +972-54-444-2054
+  </p>
+  <p class="home webonly"><a href="book.html">&larr; Back to the book page</a></p>
+</footer>
+
+</body>
+</html>
