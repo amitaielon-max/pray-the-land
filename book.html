@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letters from the Land · The Book · Pray the Land</title>
+<meta name="description" content="Thirteen letters from the Golan Heights. The complete Pray the Land book, free for every watchman on the wall.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --basalt: #23282e;
+    --basalt-deep: #1a1e23;
+    --hill: #2d343c;
+    --gold: #c9a45c;
+    --gold-soft: #b39355;
+    --parchment: #e9e2d0;
+    --stone: #8d97a3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--basalt);
+    color: var(--parchment);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.75;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  /* ---------- night sky hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 1.5rem 7rem;
+    overflow: hidden;
+    background: linear-gradient(var(--basalt) 55%, var(--basalt-deep));
+  }
+  .sky { position: absolute; inset: 0; pointer-events: none; }
+  .star {
+    position: absolute;
+    background: var(--stone);
+    border-radius: 50%;
+    opacity: .7;
+    animation: breathe 5s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100% { opacity:.35 } 50% { opacity:.85 } }
+  .hills {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 22vh;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 40rem; }
+  .eyebrow {
+    font-size: .78rem;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 2.2rem;
+  }
+  .compass {
+    color: var(--gold);
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    letter-spacing: .06em;
+    color: var(--gold);
+    line-height: 1.1;
+  }
+  .hero-rule {
+    width: 5.5rem; height: 1px;
+    background: var(--gold-soft);
+    margin: 1.6rem auto;
+  }
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    color: var(--parchment);
+  }
+  .tagline {
+    margin-top: .9rem;
+    font-size: 1rem;
+    color: var(--stone);
+  }
+  .cta-row {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: .85rem 2rem;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    letter-spacing: .05em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background .25s, color .25s;
+  }
+  .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .btn-gold { background: var(--gold); color: var(--basalt-deep); }
+  .btn-gold:hover { background: var(--parchment); }
+  .btn-ghost { border: 1px solid var(--gold-soft); color: var(--gold); }
+  .btn-ghost:hover { background: rgba(201,164,92,.12); }
+
+  /* ---------- body sections ---------- */
+  section { padding: 5rem 1.5rem; }
+  .narrow { max-width: 38rem; margin: 0 auto; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    color: var(--gold);
+    text-align: center;
+    letter-spacing: .05em;
+    margin-bottom: .6rem;
+  }
+  .section-rule {
+    width: 3.5rem; height: 1px;
+    background: var(--gold-soft);
+    margin: 0 auto 2.6rem;
+  }
+  .about p { margin-bottom: 1.3rem; }
+  .about .verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    text-align: center;
+    color: var(--parchment);
+    margin: 2.4rem 0 .4rem;
+  }
+  .about .verse-ref {
+    text-align: center;
+    font-size: .82rem;
+    letter-spacing: .22em;
+    color: var(--stone);
+    margin-bottom: 2.4rem;
+  }
+
+  /* ---------- the thirteen letters ---------- */
+  .letters { background: var(--basalt-deep); }
+  .letter-list { list-style: none; max-width: 34rem; margin: 0 auto; }
+  .letter-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 1.1rem;
+    padding: .85rem .4rem;
+    border-bottom: 1px solid rgba(141,151,163,.18);
+  }
+  .letter-list li:last-child { border-bottom: none; }
+  .letter-num {
+    font-size: .85rem;
+    color: var(--gold-soft);
+    letter-spacing: .1em;
+    min-width: 1.8rem;
+  }
+  .letter-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--parchment);
+  }
+  .letter-place { margin-left: auto; font-size: .82rem; color: var(--stone); text-align: right; }
+  @media (max-width: 540px) { .letter-place { display: none; } }
+
+  /* ---------- printed + stand ---------- */
+  .printed p { margin-bottom: 1.3rem; text-align: center; }
+  .quiet {
+    font-size: .95rem;
+    color: var(--stone);
+    text-align: center;
+    max-width: 30rem;
+    margin: 2.2rem auto 0;
+  }
+  .quiet a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,164,92,.4); }
+  .quiet a:hover { border-bottom-color: var(--gold); }
+
+  footer {
+    padding: 3.5rem 1.5rem 4rem;
+    text-align: center;
+    background: var(--basalt-deep);
+    border-top: 1px solid rgba(141,151,163,.15);
+  }
+  footer .sig {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--parchment);
+    margin-bottom: .5rem;
+  }
+  footer .small { font-size: .85rem; color: var(--stone); line-height: 1.9; }
+  footer a { color: var(--stone); text-decoration: none; border-bottom: 1px solid rgba(141,151,163,.3); }
+  footer a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="sky" id="sky" aria-hidden="true"></div>
+  <svg class="hills" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#333b44" d="M0,110 L80,95 160,105 260,80 380,100 500,70 620,95 760,60 900,90 1040,72 1180,98 1320,80 1440,95 L1440,180 0,180 Z"/>
+    <path fill="#2d343c" d="M0,140 L120,125 240,138 360,118 500,135 640,112 780,130 920,108 1060,128 1200,115 1330,132 1440,120 L1440,180 0,180 Z"/>
+  </svg>
+  <div class="hero-inner">
+    <p class="eyebrow">Pray the Land · From the Golan Heights</p>
+    <div class="compass" aria-hidden="true">&#10022;</div>
+    <h1>LETTERS FROM<br>THE LAND</h1>
+    <div class="hero-rule"></div>
+    <p class="subtitle">The complete book of the Watchmen letters</p>
+    <p class="tagline">Thirteen letters. Thirteen places where the Bible still walks the ground.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="https://docs.google.com/document/d/1p84mSTLy4x52nIuICeuO5G_hkGQ2jt63sIeptwYwDO0" target="_blank" rel="noopener">Read the book free</a>
+      <a class="btn btn-ghost" href="mailto:amitai.elon@gmail.com?subject=Printed">Request a printed copy</a>
+    </div>
+  </div>
+</header>
+
+<section class="about">
+  <div class="narrow">
+    <h2 class="section-title">A book written on a wall</h2>
+    <div class="section-rule"></div>
+    <p>For months, letters went out from a farm on a hill in the southern Golan Heights to a wall of watchmen scattered across the world. A cliff where Jesus asked His question at the enemy's front door. A roof in Capernaum torn open by four friends. A river of twelve stones. A tomb whose whole treasure is an absence. A harbor where the gospel boarded a ship and went out looking for you.</p>
+    <p>Now the letters are a book. It was written by a guide, a farmer, and a father, and it belongs to everyone who prayed it into being.</p>
+    <p class="verse">"I have posted watchmen on your walls, O Jerusalem. They will never be silent, day or night."</p>
+    <p class="verse-ref">ISAIAH 62:6</p>
+  </div>
+</section>
+
+<section class="letters">
+  <h2 class="section-title">The thirteen letters</h2>
+  <div class="section-rule"></div>
+  <ul class="letter-list">
+    <li><span class="letter-num">01</span><span class="letter-name">Standing at the Gates of Hades</span><span class="letter-place">Caesarea Philippi</span></li>
+    <li><span class="letter-num">02</span><span class="letter-name">The Four Friends of Capernaum</span><span class="letter-place">Capernaum</span></li>
+    <li><span class="letter-num">03</span><span class="letter-name">The Hill That Blesses the Broken</span><span class="letter-place">Mount of Beatitudes</span></li>
+    <li><span class="letter-num">04</span><span class="letter-name">What Do These Stones Mean?</span><span class="letter-place">The Jordan River</span></li>
+    <li><span class="letter-num">05</span><span class="letter-name">The First Messenger</span><span class="letter-place">Kursi</span></li>
+    <li><span class="letter-num">06</span><span class="letter-name">Four Stones from the Wall</span><span class="letter-place">The Watchman's Report</span></li>
+    <li><span class="letter-num">07</span><span class="letter-name">The Night the Watchman Rests</span><span class="letter-place">Shabbat, the Golan</span></li>
+    <li><span class="letter-num">08</span><span class="letter-name">The Man on the Hill</span><span class="letter-place">Havat HaChaim, Natur</span></li>
+    <li><span class="letter-num">09</span><span class="letter-name">Three Stones from the Wall</span><span class="letter-place">The Watchman's Report</span></li>
+    <li><span class="letter-num">10</span><span class="letter-name">What the Watchman Sees</span><span class="letter-place">A Word for the Wall</span></li>
+    <li><span class="letter-num">11</span><span class="letter-name">The Mountain That Waits</span><span class="letter-place">The Mount of Olives</span></li>
+    <li><span class="letter-num">12</span><span class="letter-name">The Emptiest Place in the World</span><span class="letter-place">The Holy Sepulchre</span></li>
+    <li><span class="letter-num">13</span><span class="letter-name">The Harbor Where Your Story Set Sail</span><span class="letter-place">Caesarea Maritima</span></li>
+  </ul>
+</section>
+
+<section class="printed">
+  <div class="narrow">
+    <h2 class="section-title">Free for the wall, always</h2>
+    <div class="section-rule"></div>
+    <p>The digital book is a gift to every watchman. It will always be free. A watchman does not charge the wall.</p>
+    <p>A printed edition is on its way to the press. The first copies were reserved before the press even existed. If you would like one, write with a single word: Printed.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="https://docs.google.com/document/d/1p84mSTLy4x52nIuICeuO5G_hkGQ2jt63sIeptwYwDO0" target="_blank" rel="noopener">Read the book free</a>
+      <a class="btn btn-ghost" href="mailto:amitai.elon@gmail.com?subject=Printed">Request a printed copy</a>
+    </div>
+    <p class="quiet">And if the letters have meant something to you, and you feel led to stand with the farm behind them, the <a href="stand.html">Five Stones</a> page is quietly here. No one should feel asked. The book is the gift.</p>
+  </div>
+</section>
+
+<footer>
+  <p class="sig">The covenant holds. The gates shall not prevail.</p>
+  <p class="small">
+    Amitai (Tai) Elon · Havat HaChaim · Natur · Golan Heights, Israel<br>
+    <a href="index.html">The letters live here</a> &nbsp;·&nbsp; <a href="stand.html">Stand with the Land</a><br>
+    WhatsApp +972-54-444-2054
+  </p>
+</footer>
+
+<script>
+  (function () {
+    var sky = document.getElementById('sky');
+    for (var i = 0; i < 70; i++) {
+      var s = document.createElement('div');
+      s.className = 'star';
+      var size = Math.random() * 1.6 + 0.6;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 70 + '%';
+      s.style.animationDelay = (Math.random() * 5) + 's';
+      sky.appendChild(s);
+    }
+  })();
+</script>
+
+</body>
+</html>
