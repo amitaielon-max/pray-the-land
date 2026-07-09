@@ -1,6 +1,6 @@
 # pray-the-land
 
-The Pray the Land site. Deploys to https://pray-the-land-golan.netlify.app
+The Pray the Land site. Deploys to https://pray-the-land-tai-golan.netlify.app
 
 ## Adding a film
 
