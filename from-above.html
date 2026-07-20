@@ -142,7 +142,7 @@
   <div class="vref">Deuteronomy 11 : 11–12</div>
   <div class="heb">אֶרֶץ אֲשֶׁר־יְהוָה אֱלֹהֶיךָ דֹּרֵשׁ אֹתָהּ תָּמִיד</div>
   <button id="begin" type="button">Begin the flight</button>
-  <div class="hint">three minutes · the real land, from real satellites · best with sound</div>
+  <div class="hint">five quiet minutes · the real land, from real satellites · best with sound</div>
 </div>
 
 <div id="close">
@@ -171,7 +171,8 @@
    keyframed cinematic camera: Natur, the Kinneret, Hermon.
    ================================================================ */
 
-const FLIGHT_T = 178;   // seconds
+const FLIGHT_T = 178;   // script seconds
+const TIME_SCALE = 1.6; // real seconds per script second: the land deserves a slow look
 
 const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 const EOX  = 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg';
@@ -341,7 +342,7 @@ const STILL   = qs.has('still');
 let started = false, startWall = 0, offset = 0, closed = false;
 function flightTime(){
   if(STILL && DEBUG_T !== null) return DEBUG_T;
-  return (performance.now() - startWall)/1000 + offset;
+  return (performance.now() - startWall)/1000/TIME_SCALE + offset;
 }
 function frame(){
   requestAnimationFrame(frame);
@@ -370,7 +371,7 @@ function begin(){
 document.getElementById('begin').addEventListener('click', begin);
 document.getElementById('sound').addEventListener('click', ()=> setAudio(!audioOn));
 document.getElementById('skip').addEventListener('click', ()=>{
-  offset = FLIGHT_T - (performance.now()-startWall)/1000;
+  offset = FLIGHT_T - (performance.now()-startWall)/1000/TIME_SCALE;
 });
 document.getElementById('again').addEventListener('click', ()=>{
   closed = false; curCap = -1; capVisible = false;
