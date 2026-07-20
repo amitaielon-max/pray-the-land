@@ -215,8 +215,9 @@ try{
     maxPitch:85, fadeDuration:120
   });
   map.on('style.load', ()=>{
-    map.setTerrain({ source:'dem', exaggeration:1.35 });
-
+    try{ map.setTerrain({ source:'dem', exaggeration:1.35 }); }catch(e){}
+    mapReady = true;   // arm the camera FIRST: decorations must never ground the flight
+    try{
     /* the borders, drawn on the land (approximate lines, honest at altitude) */
     map.addSource('borders', { type:'geojson', data:{ type:'FeatureCollection', features:[
       { type:'Feature', properties:{name:'syria'}, geometry:{ type:'LineString', coordinates:[
@@ -239,7 +240,7 @@ try{
         .setLngLat([L.lng, L.lat]).addTo(map);
     }
 
-    mapReady = true;
+    }catch(e){ /* labels and borders are ornament; the flight flies without them */ }
     // if the primary imagery host is unreachable, fall back to Sentinel-2 cloudless
     const probe = new Image();
     probe.onerror = ()=>{ try{ map.getSource('sat').setTiles([EOX]); }catch(e){} };
@@ -252,9 +253,9 @@ try{
    Natur 35.747,32.844 · Kinneret ~35.58,32.82 · Yarmouk ~32.68 ·
    ceasefire line east ~35.9 · Hermon ~35.86,33.42 */
 const PATH = [
-  [  0, 35.760, 32.860, 3200,  35.746, 32.845],   // high over Natur
-  [ 18, 35.752, 32.852, 1600,  35.740, 32.840],   // down over the village fields
-  [ 40, 35.745, 32.815, 1200,  35.700, 32.700],   // turning south, the Yarmouk gorge ahead
+  [  0, 35.630, 32.735, 2500,  35.750, 32.850],   // sweeping in from the south-west, land sliding below
+  [ 18, 35.712, 32.808, 1450,  35.748, 32.847],   // the fields of Natur rushing up to meet us
+  [ 40, 35.745, 32.815, 1200,  35.700, 32.700],   // over Natur, turning south toward the Yarmouk
   [ 58, 35.720, 32.755, 1100,  35.600, 32.650],   // along the border with Jordan
   [ 72, 35.685, 32.760,  950,  35.575, 32.800],   // west: the Sea of Galilee opens
   [ 86, 35.640, 32.800,  900,  35.565, 32.830],   // over the rim, the whole lake below
@@ -294,16 +295,18 @@ function camAt(t){
 }
 function setCamera(t){
   if(!mapReady || qs0.has('nocam')) return;
-  const c = camAt(t);
-  let alt = c.alt;
   try{
-    const g = map.queryTerrainElevation([c.lng, c.lat]);
-    if(g != null && alt < g + 200) alt = g + 200;   // never fly into the hill
+    const c = camAt(t);
+    let alt = c.alt;
+    try{
+      const g = map.queryTerrainElevation([c.lng, c.lat]);
+      if(g != null && isFinite(g) && alt < g + 200) alt = g + 200;   // never fly into the hill
+    }catch(e){}
+    const cam = map.getFreeCameraOptions();
+    cam.position = maplibregl.MercatorCoordinate.fromLngLat([c.lng, c.lat], alt);
+    cam.lookAtPoint([c.lookLng, c.lookLat]);
+    map.setFreeCameraOptions(cam);
   }catch(e){}
-  const cam = map.getFreeCameraOptions();
-  cam.position = maplibregl.MercatorCoordinate.fromLngLat([c.lng, c.lat], alt);
-  cam.lookAtPoint([c.lookLng, c.lookLat]);
-  map.setFreeCameraOptions(cam);
 }
 
 /* ---------------- captions ---------------- */
