@@ -71,6 +71,16 @@
   #cap .line.on{opacity:1;transform:none}
   #cap .line em{font-style:italic;color:#f3e2b0}
 
+  /* floating place labels on the land */
+  .geo-label{display:flex;align-items:center;gap:7px;pointer-events:none;opacity:0;transition:opacity 1.6s ease;
+    font-family:var(--body);font-weight:700;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;
+    color:#f0d9a0;text-shadow:0 1px 3px rgba(10,8,5,.95),0 1px 14px rgba(10,8,5,.85);white-space:nowrap}
+  .geo-label::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);
+    box-shadow:0 0 10px 2px rgba(217,178,63,.65);flex:none}
+  .geo-label.border-label{color:#f2b48a}
+  .geo-label.border-label::before{background:#d08a3a;box-shadow:0 0 10px 2px rgba(208,138,58,.6)}
+  .geo-label.on{opacity:1}
+
   #station{position:fixed;top:clamp(22px,4vh,40px);left:50%;transform:translateX(-50%);z-index:5;text-align:center;
     opacity:0;transition:opacity 1.4s ease;pointer-events:none}
   #station.on{opacity:1}
@@ -171,8 +181,8 @@
    keyframed cinematic camera: Natur, the Kinneret, Hermon.
    ================================================================ */
 
-const FLIGHT_T = 178;   // script seconds
-const TIME_SCALE = 1.6; // real seconds per script second: the land deserves a slow look
+const FLIGHT_T = 200;    // script seconds
+const TIME_SCALE = 1.35; // real seconds per script second: slow enough to pray, fast enough to fly
 
 const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 const EOX  = 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg';
@@ -206,6 +216,29 @@ try{
   });
   map.on('style.load', ()=>{
     map.setTerrain({ source:'dem', exaggeration:1.35 });
+
+    /* the borders, drawn on the land (approximate lines, honest at altitude) */
+    map.addSource('borders', { type:'geojson', data:{ type:'FeatureCollection', features:[
+      { type:'Feature', properties:{name:'syria'}, geometry:{ type:'LineString', coordinates:[
+        [35.76,32.70],[35.87,32.78],[35.93,32.90],[35.90,33.00],[35.83,33.10],[35.80,33.20],[35.74,33.32] ] } },
+      { type:'Feature', properties:{name:'jordan'}, geometry:{ type:'LineString', coordinates:[
+        [35.56,32.63],[35.64,32.68],[35.72,32.69],[35.76,32.70] ] } }
+    ]}});
+    map.addLayer({ id:'border-glow', type:'line', source:'borders',
+      paint:{ 'line-color':'#d08a3a', 'line-width':9, 'line-opacity':0.16, 'line-blur':4 } });
+    map.addLayer({ id:'border-line', type:'line', source:'borders',
+      paint:{ 'line-color':'#e8a45c', 'line-width':2.2, 'line-opacity':0.85, 'line-dasharray':[2.2,1.8] } });
+
+    /* floating names of the places, shown when their station arrives */
+    for(const L of LABELS){
+      const el = document.createElement('div');
+      el.className = 'geo-label' + (L.border ? ' border-label' : '');
+      el.textContent = L.text;
+      L.el = el;
+      new maplibregl.Marker({ element: el, anchor:'left', offset:[12,0] })
+        .setLngLat([L.lng, L.lat]).addTo(map);
+    }
+
     mapReady = true;
     // if the primary imagery host is unreachable, fall back to Sentinel-2 cloudless
     const probe = new Image();
@@ -216,17 +249,32 @@ try{
 
 /* ---------------- the real flight path ----------------
    [time, camera lng, lat, altitude m, look-at lng, lat]
-   Natur 35.747,32.844 · Kinneret ~35.59,32.82 · Hermon ~35.85,33.42 */
+   Natur 35.747,32.844 · Kinneret ~35.58,32.82 · Yarmouk ~32.68 ·
+   ceasefire line east ~35.9 · Hermon ~35.86,33.42 */
 const PATH = [
-  [  0, 35.760, 32.812, 3400,  35.744, 32.846],   // high over the southern Golan, Natur below
-  [ 22, 35.756, 32.826, 1900,  35.740, 32.850],   // descending toward the village fields
-  [ 48, 35.742, 32.842, 1150,  35.700, 32.846],   // low over the quilt of Natur's plots
-  [ 70, 35.712, 32.846,  950,  35.640, 32.836],   // west across the basalt plateau
-  [ 92, 35.664, 32.842,  820,  35.575, 32.810],   // the rim: the Kinneret opens below
-  [112, 35.636, 32.874, 1000,  35.585, 32.770],   // over the water, the whole lake south of us
-  [136, 35.660, 32.980, 1500,  35.760, 33.240],   // banking north along the Jordan rift
-  [158, 35.700, 33.130, 2300,  35.830, 33.400],   // the Hula below, Hermon ahead
-  [178, 35.740, 33.240, 3600,  35.860, 33.440],   // climbing into the light of the mountain
+  [  0, 35.760, 32.860, 3200,  35.746, 32.845],   // high over Natur
+  [ 18, 35.752, 32.852, 1600,  35.740, 32.840],   // down over the village fields
+  [ 40, 35.745, 32.815, 1200,  35.700, 32.700],   // turning south, the Yarmouk gorge ahead
+  [ 58, 35.720, 32.755, 1100,  35.600, 32.650],   // along the border with Jordan
+  [ 72, 35.685, 32.760,  950,  35.575, 32.800],   // west: the Sea of Galilee opens
+  [ 86, 35.640, 32.800,  900,  35.565, 32.830],   // over the rim, the whole lake below
+  [100, 35.625, 32.870, 1100,  35.620, 33.000],   // north along the shore
+  [114, 35.660, 32.930, 1400,  35.820, 33.000],   // turning east over the Golan
+  [128, 35.720, 32.960, 1500,  35.920, 32.940],   // the ceasefire line with Syria ahead
+  [142, 35.745, 33.010, 1600,  35.850, 33.100],   // riding north along the border
+  [156, 35.740, 33.100, 1900,  35.845, 33.400],   // Hermon rises
+  [172, 35.760, 33.200, 2500,  35.855, 33.430],   // climbing toward the mountain
+  [200, 35.790, 33.310, 3900,  35.885, 33.470],   // into the light
+];
+
+/* place labels: text pinned to real coordinates, lit in its hour */
+const LABELS = [
+  { lng:35.747, lat:32.845, text:'Natur · the farm',        from:  4, to: 42 },
+  { lng:35.660, lat:32.665, text:'The border with Jordan',  from: 40, to: 74, border:true },
+  { lng:35.583, lat:32.815, text:'The Sea of Galilee',      from: 70, to:118 },
+  { lng:35.780, lat:32.930, text:'The Golan Heights',       from:110, to:146 },
+  { lng:35.895, lat:32.950, text:'The border with Syria',   from:124, to:168, border:true },
+  { lng:35.857, lat:33.425, text:'Mount Hermon',            from:152, to:200 },
 ];
 function smoother(x){ return x*x*x*(x*(x*6-15)+10); }
 function camAt(t){
@@ -260,17 +308,20 @@ function setCamera(t){
 
 /* ---------------- captions ---------------- */
 const SCRIPT = [
-  { t:   6, d: 12, k:'the ask',      h:'One of the watchmen wrote to me this week.<br>She asked, <em>can you show us the land from the air?</em>' },
-  { t:  20, d: 11, k:'the ask',      h:'The sky here is a watched sky. We live close to the border.<br>No drone of mine may cross it.' },
-  { t:  33, d:  8, k:'the ask',      h:'So I borrowed the eyes of satellites.<br>Every field below you now is real.' },
-  { t:  44, d: 12, k:'natur',        h:'Below us, the fields of Natur.<br>Our farm is one of the small squares of gold.' },
-  { t:  58, d: 12, k:'the plateau',  h:'These hills are basalt. Old fire that cooled<br>and learned to grow wheat.' },
-  { t:  74, d: 12, k:'the kinneret', h:'West of us the Kinneret opens under the morning.<br>The whole lake answers the light.' },
-  { t:  92, d: 11, k:'the kinneret', h:'Every rain that falls on these hills<br>finds its way down to that water.' },
-  { t: 108, d: 12, k:'north',        h:'Now we turn north along the Jordan,<br>and Hermon rises ahead to give everyone to drink.' },
-  { t: 124, d: 13, k:'the keeper',   h:'Look at all of it at once.<br>This is not my view. This is His.' },
-  { t: 140, d: 14, k:'the keeper',   h:'<em>The eyes of the LORD your God are always upon it,<br>from the beginning of the year to the end of the year.</em>' },
-  { t: 157, d: 13, k:'the keeper',   h:'The land is watched, day and night.<br>And so are you, watchman on the wall.' },
+  { t:   4, d: 11, k:'the ask',                h:'One of the watchmen asked me,<br><em>can you show us the land from the air?</em> Here it is. All of it real.' },
+  { t:  17, d: 10, k:'natur · the farm',       h:'Below us, the fields of Natur.<br>Our farm is one of the small squares of gold.' },
+  { t:  29, d: 10, k:'natur · the farm',       h:'<em>“Every man shall sit under his vine and under his fig tree,<br>and none shall make them afraid.”</em> &nbsp;Micah 4' },
+  { t:  42, d: 11, k:'the border with jordan', h:'That dark gorge ahead is the Yarmouk.<br>The far bank is the Kingdom of Jordan.' },
+  { t:  56, d: 11, k:'the border with jordan', h:'<em>“He makes peace in your borders,<br>and fills you with the finest of the wheat.”</em> &nbsp;Psalm 147' },
+  { t:  71, d: 11, k:'the sea of galilee',     h:'West of us the Kinneret, the Sea of Galilee.<br>He walked on this water.' },
+  { t:  85, d: 10, k:'the sea of galilee',     h:'Every rain that falls on these hills<br>finds its way down to it.' },
+  { t: 100, d: 10, k:'the golan heights',      h:'We turn north over the Golan.<br>Black basalt, old fire that learned to grow wheat.' },
+  { t: 113, d: 10, k:'the golan heights',      h:'Watched land, from every side.<br>Now look east.' },
+  { t: 126, d: 12, k:'the border with syria',  h:'That long line to the east is the ceasefire line.<br>Beyond it, Syria.' },
+  { t: 140, d: 12, k:'the border with syria',  h:'<em>“They shall beat their swords into plowshares...<br>nation shall not lift up sword against nation.”</em> &nbsp;Isaiah 2' },
+  { t: 155, d: 11, k:'mount hermon',           h:'Ahead, Mount Hermon.<br>In winter he wears white and gives everyone to drink.' },
+  { t: 168, d: 12, k:'mount hermon',           h:'<em>“Like the dew of Hermon on the mountains of Zion,<br>for there the LORD commanded the blessing.”</em> &nbsp;Psalm 133' },
+  { t: 183, d: 15, k:'the keeper',             h:'<em>The eyes of the LORD your God are always upon it,<br>from the beginning of the year to the end of the year.</em>' },
 ];
 const capLine = document.getElementById('cap-line');
 const stationEl = document.getElementById('station');
@@ -297,6 +348,9 @@ function updateCaptions(t){
     curCap = idx;
   }
   if(t > FLIGHT_T - 8) stationEl.classList.remove('on');
+  for(const L of LABELS){
+    if(L.el) L.el.classList.toggle('on', t >= L.from && t <= L.to);
+  }
 }
 
 /* ---------------- ambient sound ---------------- */
