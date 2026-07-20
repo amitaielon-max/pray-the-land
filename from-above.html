@@ -293,19 +293,29 @@ function camAt(t){
     lookLat: lerp(A[5],B[5]),
   };
 }
+/* Drive the camera with jumpTo (center/zoom/pitch/bearing): the most
+   portable camera API there is. Each frame we translate "camera at
+   (lng,lat,alt) looking at (lookLng,lookLat)" into those four values. */
+const EARTH_C = 40075016.686, RAD = Math.PI/180;
 function setCamera(t){
   if(!mapReady || qs0.has('nocam')) return;
   try{
     const c = camAt(t);
-    let alt = c.alt;
+    let elev = 0;
     try{
-      const g = map.queryTerrainElevation([c.lng, c.lat]);
-      if(g != null && isFinite(g) && alt < g + 200) alt = g + 200;   // never fly into the hill
+      const e = map.queryTerrainElevation([c.lookLng, c.lookLat]);
+      if(e != null && isFinite(e)) elev = e;
     }catch(e){}
-    const cam = map.getFreeCameraOptions();
-    cam.position = maplibregl.MercatorCoordinate.fromLngLat([c.lng, c.lat], alt);
-    cam.lookAtPoint([c.lookLng, c.lookLat]);
-    map.setFreeCameraOptions(cam);
+    const dE = (c.lookLng - c.lng) * Math.cos(c.lat*RAD) * 111320;
+    const dN = (c.lookLat - c.lat) * 110540;
+    const hd = Math.hypot(dE, dN);
+    const dAlt = Math.max(80, c.alt - elev);
+    const bearing = Math.atan2(dE, dN) / RAD;
+    const pitch = Math.min(72, Math.max(0, Math.atan2(hd, dAlt) / RAD));
+    const dist = Math.hypot(hd, dAlt);                      // camera-to-center, metres
+    const h = (map.getCanvas() ? map.getCanvas().clientHeight : innerHeight) || innerHeight;
+    const zoom = Math.log2(EARTH_C * Math.cos(c.lookLat*RAD) * 1.5 * h / (512 * dist));
+    map.jumpTo({ center:[c.lookLng, c.lookLat], zoom, pitch, bearing });
   }catch(e){}
 }
 
