@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wall of Light · Pray the Land</title>
+<meta name="description" content="Sixty-six watchmen. Nine nations. One wall. The earth turns in the night, and every spark of prayer travels home to Jerusalem.">
+<meta property="og:title" content="The Wall of Light · you can see it burning now">
+<meta property="og:description" content="Sixty-six watchmen. Nine nations. One wall. Every spark arrives in Jerusalem.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#15110D; --basalt-2:#211C17;
+    --parchment:#FAF6EC; --parchment-dim:#E8DEC6;
+    --gold:#C9A227; --gold-soft:#D9B23F; --gold-deep:#7a6420;
+    --warm-white:#EAE2CE; --muted:#b3a890; --blue:#7aa8ff;
+    --display:'Cormorant Garamond',Georgia,serif;
+    --body:'Frank Ruhl Libre',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--body);background:#0b0906;color:var(--warm-white);overflow-x:hidden;
+    -webkit-font-smoothing:antialiased}
+  canvas#wall{position:fixed;inset:0;width:100%;height:100%;display:block;background:#0b0906}
+
+  .overlay{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;
+    justify-content:space-between;align-items:center;text-align:center;padding:34px 22px 26px;pointer-events:none}
+  .overlay a,.overlay .foot{pointer-events:auto}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .head>*{animation:fadeUp 1.2s ease both}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+  h1{font-family:var(--display);font-weight:500;color:var(--warm-white);
+    font-size:clamp(40px,8vw,84px);line-height:1;margin:14px 0 0;animation-delay:.25s}
+  .sub{font-family:var(--display);font-style:italic;color:var(--parchment-dim);
+    font-size:clamp(17px,2.8vw,25px);margin-top:10px;animation-delay:.55s}
+
+  .foot{animation:fadeUp 1.2s ease both;animation-delay:1s}
+  .counts{font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .verse{max-width:520px;margin:14px auto 0;font-style:italic;color:var(--warm-white);
+    font-size:clamp(14px,1.9vw,17px);line-height:1.7;text-shadow:0 1px 16px rgba(5,4,2,.9)}
+  .vref{color:var(--blue);letter-spacing:.24em;font-size:11px;margin-top:8px;text-transform:uppercase}
+  .cta{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:var(--body);font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+    text-decoration:none;padding:12px 22px;border-radius:2px;transition:transform .2s,background .2s}
+  .btn-gold{background:var(--gold);color:var(--basalt)}
+  .btn-gold:hover{transform:translateY(-2px);background:var(--gold-soft)}
+  .btn-ghost{border:1px solid var(--gold);color:var(--gold)}
+  .btn-ghost:hover{background:rgba(201,162,39,.14);transform:translateY(-2px)}
+  .note{margin-top:16px;color:var(--muted);font-size:12px;letter-spacing:.04em}
+
+  @media (prefers-reduced-motion:reduce){ .head>*,.foot{animation:none} }
+</style>
+</head>
+<body>
+<canvas id="wall"></canvas>
+
+<div class="overlay">
+  <div class="head">
+    <div class="eyebrow">Pray the Land · from the Golan</div>
+    <h1>The Wall of Light</h1>
+    <div class="sub">you can see it burning now</div>
+  </div>
+
+  <div class="foot">
+    <div class="counts" id="counts">Sixty-six watchmen · Nine nations · One wall</div>
+    <div class="verse">“I have set watchmen on your walls, O Jerusalem;<br>they shall never be silent, day nor night.”</div>
+    <div class="vref">Isaiah 62 : 6</div>
+    <div class="cta">
+      <a class="btn btn-gold" href="/from-above">Come fly over the land</a>
+      <a class="btn btn-ghost" href="/">Pray the Land</a>
+    </div>
+    <div class="note">Not one name and not one address. Only light.</div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* The Wall of Light.
+   The earth turns slowly in the night. On the dark earth, points of gold:
+   the watchmen. Sparks of prayer travel along golden threads from every
+   nation, and every one of them arrives in Jerusalem. */
+
+const cv = document.getElementById('wall');
+const cx = cv.getContext('2d');
+let W=0, H=0, DPR=1, R=0, CXp=0, CYp=0;
+function resize(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  W = cv.width  = Math.round(innerWidth*DPR);
+  H = cv.height = Math.round(innerHeight*DPR);
+  cv.style.width = innerWidth+'px'; cv.style.height = innerHeight+'px';
+  R = Math.min(W,H)*0.335;
+  CXp = W/2; CYp = H*0.52;
+}
+addEventListener('resize', resize); resize();
+
+/* ---- the nations of the wall (lat, lon, watchmen count) ---- */
+const JER = {lat:31.78, lon:35.22};
+const NATIONS = [
+  {lat: 39.0, lon: -98.0, n:30},   // America
+  {lat: 55.0, lon:-105.0, n: 6},   // Canada
+  {lat: 52.5, lon:  -1.5, n: 6},   // England
+  {lat: 49.5, lon:  10.0, n: 8},   // Europe
+  {lat:-41.0, lon: 174.0, n: 4},   // New Zealand
+  {lat:-29.0, lon:  24.0, n: 3},   // South Africa
+  {lat:-25.0, lon: 134.0, n: 4},   // Australia
+  {lat: 16.0, lon: 108.0, n: 1},   // Vietnam
+  {lat: 31.9, lon:  35.1, n: 4},   // Israel
+];
+function toVec(lat, lon){
+  const la = lat*Math.PI/180, lo = lon*Math.PI/180;
+  return [Math.cos(la)*Math.sin(lo), Math.sin(la), Math.cos(la)*Math.cos(lo)];
+}
+// scatter each nation's watchmen gently around its heart
+function mulberry(seed){ return function(){ seed|=0; seed=(seed+0x6D2B79F5)|0;
+  let t=Math.imul(seed^(seed>>>15),1|seed); t=(t+Math.imul(t^(t>>>7),61|t))^t;
+  return ((t^(t>>>14))>>>0)/4294967296; }; }
+const rnd = mulberry(66);
+const LIGHTS = [];
+NATIONS.forEach((nat,ni)=>{
+  for(let i=0;i<nat.n;i++){
+    const la = nat.lat + (rnd()-0.5)*14;
+    const lo = nat.lon + (rnd()-0.5)*(ni===0?34:16);
+    LIGHTS.push({v:toVec(la,lo), phase:rnd()*Math.PI*2, next:rnd()*9});
+  }
+});
+const JV = toVec(JER.lat, JER.lon);
+
+/* slerp along the great circle between two unit vectors */
+function slerp(a,b,f){
+  let d = a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  d = Math.min(1, Math.max(-1, d));
+  const th = Math.acos(d);
+  if(th < 1e-4) return a.slice();
+  const s = Math.sin(th);
+  const A = Math.sin((1-f)*th)/s, B = Math.sin(f*th)/s;
+  return [a[0]*A+b[0]*B, a[1]*A+b[1]*B, a[2]*A+b[2]*B];
+}
+function rotY(v, ang){
+  const c=Math.cos(ang), s=Math.sin(ang);
+  return [v[0]*c+v[2]*s, v[1], -v[0]*s+v[2]*c];
+}
+const TILT = 0.45;
+function project(v, ang){
+  let p = rotY(v, ang);
+  const c=Math.cos(TILT), s=Math.sin(TILT);
+  p = [p[0], p[1]*c - p[2]*s, p[1]*s + p[2]*c];
+  return {x: CXp + p[0]*R, y: CYp - p[1]*R, z: p[2]};
+}
+
+/* stars, once */
+const STARS = [];
+for(let i=0;i<240;i++) STARS.push({x:rnd(), y:rnd(), r:rnd()*1.2+0.3, tw:rnd()*Math.PI*2});
+
+/* sparks in flight */
+const sparks = [];
+let last = performance.now();
+const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+function frame(now){
+  requestAnimationFrame(frame);
+  const dt = Math.min(0.05, (now-last)/1000); last = now;
+  const t = now/1000;
+  // the earth turns slowly in the night, Jerusalem before our eyes
+  const ang = -0.615 + (reduced ? 0 : 0.55*Math.sin(t*0.045));
+
+  cx.clearRect(0,0,W,H);
+
+  // night sky
+  for(const s of STARS){
+    const a = 0.25 + 0.2*Math.sin(t*0.8 + s.tw);
+    cx.globalAlpha = a;
+    cx.fillStyle = '#d8c9a0';
+    cx.beginPath(); cx.arc(s.x*W, s.y*H, s.r*DPR, 0, 7); cx.fill();
+  }
+  cx.globalAlpha = 1;
+
+  // the dark earth
+  const g = cx.createRadialGradient(CXp-R*0.35, CYp-R*0.4, R*0.1, CXp, CYp, R);
+  g.addColorStop(0, '#241d14');
+  g.addColorStop(0.7, '#171209');
+  g.addColorStop(1, '#0e0b06');
+  cx.fillStyle = g;
+  cx.beginPath(); cx.arc(CXp, CYp, R, 0, 7); cx.fill();
+  // limb glow
+  cx.strokeStyle = 'rgba(201,162,39,0.22)';
+  cx.lineWidth = 1.4*DPR;
+  cx.beginPath(); cx.arc(CXp, CYp, R, 0, 7); cx.stroke();
+
+  // faint graticule
+  cx.strokeStyle = 'rgba(201,162,39,0.06)';
+  cx.lineWidth = 1*DPR;
+  for(let lat=-60; lat<=60; lat+=30){
+    cx.beginPath();
+    for(let lon=0; lon<=360; lon+=6){
+      const p = project(toVec(lat,lon), ang);
+      if(p.z > 0){ cx.lineTo(p.x, p.y); } else { cx.stroke(); cx.beginPath(); }
+    }
+    cx.stroke();
+  }
+  for(let lon=0; lon<360; lon+=30){
+    cx.beginPath();
+    for(let lat=-84; lat<=84; lat+=6){
+      const p = project(toVec(lat,lon), ang);
+      if(p.z > 0){ cx.lineTo(p.x, p.y); } else { cx.stroke(); cx.beginPath(); }
+    }
+    cx.stroke();
+  }
+
+  // golden threads home
+  cx.lineWidth = 1*DPR;
+  for(const nat of NATIONS){
+    const nv = toVec(nat.lat, nat.lon);
+    cx.strokeStyle = 'rgba(201,162,39,0.13)';
+    cx.beginPath();
+    let pen = false;
+    for(let f=0; f<=1.001; f+=0.02){
+      const lift = 1 + 0.22*Math.sin(Math.PI*f);
+      const v = slerp(nv, JV, f);
+      const p = project([v[0]*lift, v[1]*lift, v[2]*lift], ang);
+      if(p.z > -0.15){ if(pen) cx.lineTo(p.x,p.y); else { cx.moveTo(p.x,p.y); pen=true; } }
+      else pen = false;
+    }
+    cx.stroke();
+  }
+
+  // the watchmen: points of gold on the dark earth
+  for(const L of LIGHTS){
+    const p = project(L.v, ang);
+    if(p.z <= 0) continue;
+    const pulse = 0.65 + 0.35*Math.sin(t*1.6 + L.phase);
+    const r = (1.6 + 1.2*pulse) * DPR * (0.7 + 0.3*p.z);
+    const gg = cx.createRadialGradient(p.x,p.y,0, p.x,p.y, r*4);
+    gg.addColorStop(0, 'rgba(233,198,103,'+(0.85*pulse)+')');
+    gg.addColorStop(1, 'rgba(233,198,103,0)');
+    cx.fillStyle = gg;
+    cx.beginPath(); cx.arc(p.x,p.y,r*4,0,7); cx.fill();
+    cx.fillStyle = 'rgba(250,240,214,'+(0.55+0.45*pulse)+')';
+    cx.beginPath(); cx.arc(p.x,p.y,r*0.7,0,7); cx.fill();
+
+    // now and then, a spark leaves for Jerusalem
+    L.next -= dt;
+    if(L.next <= 0 && !reduced){
+      sparks.push({a:L.v, f:0, sp:0.10+rnd()*0.06});
+      L.next = 5 + rnd()*9;
+    }
+  }
+
+  // sparks travelling home
+  for(let i=sparks.length-1; i>=0; i--){
+    const s = sparks[i];
+    s.f += dt*s.sp/0.35;
+    if(s.f >= 1){ sparks.splice(i,1); continue; }
+    const lift = 1 + 0.22*Math.sin(Math.PI*s.f);
+    const v = slerp(s.a, JV, s.f);
+    const p = project([v[0]*lift, v[1]*lift, v[2]*lift], ang);
+    if(p.z <= -0.15) continue;
+    const tail = Math.max(0, s.f-0.06);
+    const vt = slerp(s.a, JV, tail);
+    const lt = 1 + 0.22*Math.sin(Math.PI*tail);
+    const pt = project([vt[0]*lt, vt[1]*lt, vt[2]*lt], ang);
+    cx.strokeStyle = 'rgba(233,198,103,0.5)';
+    cx.lineWidth = 1.2*DPR;
+    cx.beginPath(); cx.moveTo(pt.x,pt.y); cx.lineTo(p.x,p.y); cx.stroke();
+    cx.fillStyle = '#f7e9bd';
+    cx.beginPath(); cx.arc(p.x,p.y,1.5*DPR,0,7); cx.fill();
+  }
+
+  // Jerusalem, burning in the middle of the earth
+  const jp = project(JV, ang);
+  if(jp.z > -0.05){
+    const pulse = 0.7 + 0.3*Math.sin(t*1.1);
+    const rr = 9*DPR*pulse*(0.75+0.25*Math.max(0,jp.z));
+    const jg = cx.createRadialGradient(jp.x,jp.y,0, jp.x,jp.y, rr*3.4);
+    jg.addColorStop(0, 'rgba(255,236,180,0.95)');
+    jg.addColorStop(0.35, 'rgba(233,198,103,0.5)');
+    jg.addColorStop(1, 'rgba(233,198,103,0)');
+    cx.fillStyle = jg;
+    cx.beginPath(); cx.arc(jp.x,jp.y,rr*3.4,0,7); cx.fill();
+    cx.fillStyle = '#fff7df';
+    cx.beginPath(); cx.arc(jp.x,jp.y,2.6*DPR,0,7); cx.fill();
+  }
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -21,3 +21,9 @@
   from = "/from-above"
   to = "/from-above.html"
   status = 301
+
+# short URL used in the Wall of Light broadcast letter
+[[redirects]]
+  from = "/wall-of-light"
+  to = "/wall-of-light.html"
+  status = 301
