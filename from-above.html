@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Above · a flight over the land · Pray the Land</title>
+<meta name="description" content="A flight over the Golan at first light. No drone, no camera. Light and code, and the land the Keeper watches from the beginning of the year to the end of the year.">
+<meta property="og:title" content="From Above · a flight over the land">
+<meta property="og:description" content="Come see the land the way its Keeper sees it. A flight over the Golan at first light.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#15110D; --basalt-2:#211C17;
+    --parchment:#FAF6EC; --parchment-dim:#E8DEC6;
+    --gold:#C9A227; --gold-soft:#D9B23F; --gold-deep:#7a6420;
+    --warm-white:#EAE2CE; --muted:#b3a890;
+    --display:'Cormorant Garamond',Georgia,serif;
+    --body:'Frank Ruhl Libre',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--body);background:var(--basalt);color:var(--warm-white);overflow:hidden;
+    -webkit-font-smoothing:antialiased}
+  canvas#sky{position:fixed;inset:0;width:100%;height:100%;display:block;background:#0f0c08}
+
+  .vignette{position:fixed;inset:0;pointer-events:none;z-index:2;
+    background:radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(10,8,5,.55) 100%)}
+  .grain{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.06;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E")}
+
+  /* ---------- title screen ---------- */
+  #gate{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:24px;background:linear-gradient(180deg, rgba(15,12,8,.55) 0%, rgba(15,12,8,.78) 100%);
+    transition:opacity 1.6s ease, visibility 1.6s}
+  #gate.gone{opacity:0;visibility:hidden}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  #gate>*{animation:fadeUp 1.2s ease both}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+  #gate h1{font-family:var(--display);font-weight:500;color:var(--warm-white);
+    font-size:clamp(54px,11vw,120px);line-height:1;margin:18px 0 0;animation-delay:.3s}
+  #gate .sub{font-family:var(--display);font-style:italic;color:var(--parchment-dim);
+    font-size:clamp(19px,3.2vw,30px);margin-top:14px;animation-delay:.7s}
+  #gate .verse{max-width:560px;margin:34px auto 0;font-style:italic;color:var(--warm-white);
+    font-size:clamp(15px,2vw,18px);line-height:1.75;animation-delay:1.1s}
+  #gate .vref{color:var(--gold);letter-spacing:.22em;font-size:12px;margin-top:12px;text-transform:uppercase;animation-delay:1.4s}
+  #gate .heb{color:var(--gold);direction:rtl;font-size:clamp(16px,2.3vw,22px);margin-top:8px;animation-delay:1.6s}
+  #begin{margin-top:44px;font-family:var(--body);font-weight:700;font-size:14px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--basalt);background:var(--gold);border:0;cursor:pointer;
+    padding:16px 38px;border-radius:2px;transition:transform .2s ease,background .2s ease;animation-delay:1.9s}
+  #begin:hover{transform:translateY(-2px);background:var(--gold-soft)}
+  #gate .hint{margin-top:16px;color:var(--muted);font-size:12.5px;letter-spacing:.05em;animation-delay:2.2s}
+
+  /* ---------- captions ---------- */
+  #cap{position:fixed;left:50%;bottom:clamp(48px,11vh,110px);transform:translateX(-50%);z-index:5;
+    width:min(720px,88vw);text-align:center;pointer-events:none}
+  #cap .line{opacity:0;transform:translateY(14px);transition:opacity 1.8s ease,transform 1.8s ease;
+    font-family:var(--display);font-size:clamp(21px,3.4vw,33px);font-weight:500;line-height:1.45;
+    color:var(--parchment);text-shadow:0 1px 22px rgba(10,8,5,.85),0 1px 6px rgba(10,8,5,.9)}
+  #cap .line.on{opacity:1;transform:none}
+  #cap .line em{font-style:italic;color:#f3e2b0}
+
+  /* ---------- station marker ---------- */
+  #station{position:fixed;top:clamp(22px,4vh,40px);left:50%;transform:translateX(-50%);z-index:5;text-align:center;
+    opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+  #station.on{opacity:1}
+  #station .k{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:700;
+    text-shadow:0 1px 12px rgba(10,8,5,.9)}
+
+  /* ---------- controls ---------- */
+  #ui{position:fixed;right:18px;bottom:16px;z-index:8;display:flex;gap:10px;opacity:0;transition:opacity 1s ease}
+  #ui.on{opacity:1}
+  #ui button{background:rgba(21,17,13,.55);border:1px solid rgba(201,162,39,.45);color:var(--gold);
+    font-family:var(--body);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    padding:9px 14px;border-radius:2px;cursor:pointer;backdrop-filter:blur(6px);transition:background .2s,color .2s}
+  #ui button:hover{background:rgba(201,162,39,.18)}
+  #progress{position:fixed;left:0;bottom:0;height:2px;width:0%;z-index:8;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold));opacity:.7;transition:width .5s linear}
+
+  /* ---------- closing card ---------- */
+  #close{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:26px;opacity:0;visibility:hidden;transition:opacity 2.4s ease,visibility 2.4s;
+    background:linear-gradient(180deg, rgba(15,12,8,.62), rgba(15,12,8,.85))}
+  #close.on{opacity:1;visibility:visible}
+  #close .stars3{color:var(--gold);letter-spacing:14px;font-size:15px}
+  #close h2{font-family:var(--display);font-weight:500;color:var(--warm-white);font-size:clamp(34px,6vw,60px);margin:16px 0 0}
+  #close .verse{max-width:600px;margin:26px auto 0;font-style:italic;font-size:clamp(15px,2vw,18.5px);line-height:1.8;color:var(--warm-white)}
+  #close .vref{color:var(--gold);letter-spacing:.22em;font-size:12px;margin-top:12px;text-transform:uppercase}
+  #close .dedic{margin-top:30px;color:var(--parchment-dim);font-family:var(--display);font-style:italic;font-size:clamp(17px,2.4vw,22px);max-width:560px;line-height:1.6}
+  #close .sig{margin-top:26px;color:var(--muted);font-size:14.5px;line-height:1.7}
+  #close .sig b{color:var(--warm-white);font-weight:500}
+  #close .cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  #close .cta a,#close .cta button{font-family:var(--body);font-weight:700;font-size:13px;letter-spacing:.1em;
+    text-transform:uppercase;text-decoration:none;padding:13px 26px;border-radius:2px;cursor:pointer;transition:transform .2s,background .2s}
+  .btn-gold{background:var(--gold);color:var(--basalt);border:0}
+  .btn-gold:hover{transform:translateY(-2px);background:var(--gold-soft)}
+  .btn-ghost{border:1px solid var(--gold);color:var(--gold);background:transparent}
+  .btn-ghost:hover{background:rgba(201,162,39,.14);transform:translateY(-2px)}
+
+  #fallback{position:fixed;inset:0;z-index:1;display:none;
+    background:radial-gradient(120% 90% at 70% 20%, #3a2c14 0%, #1c150c 55%, #0f0c08 100%)}
+
+  @media (prefers-reduced-motion:reduce){
+    #gate>*{animation:none}
+    #cap .line{transition:opacity .6s ease}
+  }
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div id="fallback"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div id="station"><div class="k" id="station-k"></div></div>
+<div id="cap"><div class="line" id="cap-line"></div></div>
+<div id="progress"></div>
+
+<div id="ui">
+  <button id="sound" type="button">Sound on</button>
+  <button id="skip" type="button">Skip flight</button>
+</div>
+
+<div id="gate">
+  <div class="eyebrow">Pray the Land · from the Golan</div>
+  <h1>From Above</h1>
+  <div class="sub">a flight over the land</div>
+  <div class="verse">“A land of hills and valleys, that drinks water from the rain of heaven.
+    A land the LORD your God cares for. The eyes of the LORD your God are always upon it,
+    from the beginning of the year to the end of the year.”</div>
+  <div class="vref">Deuteronomy 11 : 11–12</div>
+  <div class="heb">אֶרֶץ אֲשֶׁר־יְהוָה אֱלֹהֶיךָ דֹּרֵשׁ אֹתָהּ תָּמִיד</div>
+  <button id="begin" type="button">Begin the flight</button>
+  <div class="hint">three minutes · best with sound · nothing to click, only to see</div>
+</div>
+
+<div id="close">
+  <div class="stars3">✦ ✦ ✦</div>
+  <h2>The eyes that never close</h2>
+  <div class="verse">“The eyes of the LORD your God are always upon it,<br>
+    from the beginning of the year to the end of the year.”</div>
+  <div class="vref">Deuteronomy 11 : 12</div>
+  <div class="dedic">For the watchmen who asked to see the land from the air.<br>
+    This is the oldest aerial view there is. You are on His wall, and He is over you both.</div>
+  <div class="sig">B'ahava, from the Golan,<br><b>Amitai (Tai) Elon</b> · Natur Farm, Golan Heights</div>
+  <div class="cta">
+    <button class="btn-gold" id="again" type="button">Fly again</button>
+    <a class="btn-ghost" href="https://pray-the-land-golan.netlify.app/wall-of-light">See the Wall of Light</a>
+    <a class="btn-ghost" href="https://pray-the-land-golan.netlify.app/">Pray the Land</a>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ================================================================
+   FROM ABOVE · a real-time flight over a Golan-inspired land.
+   One fragment shader raymarches a heightfield: basalt plateau,
+   field plots of Natur, the Kinneret basin to the west, Hermon
+   to the north, first light from the east. No footage, no drone.
+   ================================================================ */
+
+const FLIGHT_T = 178;            // seconds, full flight
+const canvas = document.getElementById('sky');
+const gl = canvas.getContext('webgl', {antialias:false, alpha:false, powerPreference:'high-performance'});
+
+const VSRC = `
+attribute vec2 aP; varying vec2 vUv;
+void main(){ vUv = aP*0.5+0.5; gl_Position = vec4(aP,0.0,1.0); }
+`;
+
+const FSRC = `
+precision highp float;
+varying vec2 vUv;
+uniform vec2  uRes;
+uniform float uTime;      // flight-clock seconds
+uniform vec3  uCamPos;
+uniform mat3  uCamRot;    // camera basis (right, up, fwd columns)
+uniform float uFade;      // 0..1 white-gold fade at the end
+
+/* ---------- hash & noise ---------- */
+float hash(vec2 p){ p = fract(p*vec2(123.34, 456.21)); p += dot(p, p+45.32); return fract(p.x*p.y); }
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  vec2 u = f*f*(3.0-2.0*f);
+  float a = hash(i), b = hash(i+vec2(1,0)), c = hash(i+vec2(0,1)), d = hash(i+vec2(1,1));
+  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+}
+float fbm(vec2 p){
+  float v = 0.0, a = 0.5;
+  mat2 r = mat2(0.8,-0.6,0.6,0.8);
+  for(int i=0;i<5;i++){ v += a*noise(p); p = r*p*2.02; a *= 0.5; }
+  return v;
+}
+float fbm3(vec2 p){
+  float v = 0.0, a = 0.5;
+  mat2 r = mat2(0.8,-0.6,0.6,0.8);
+  for(int i=0;i<3;i++){ v += a*noise(p); p = r*p*2.02; a *= 0.5; }
+  return v;
+}
+
+/* ---------- world layout (metres-ish) ----------
+   flight runs toward +z. west = -x (Kinneret basin). east = +x (sunrise).
+   Hermon ridge far ahead, slightly east.                                  */
+const float WATER = 18.0;
+
+float lakeMask(vec2 p){                       // 1 inside lake basin
+  vec2 c = vec2(-4200.0, 3400.0);
+  vec2 d = (p - c)/vec2(2600.0, 3600.0);      // elongated north-south like Kinneret
+  float r = length(d);
+  return 1.0 - smoothstep(0.72, 1.05, r);
+}
+float hermon(vec2 p){
+  vec2 c = vec2(3200.0, 17500.0);
+  vec2 d = (p - c)/vec2(6200.0, 3000.0);
+  float base = exp(-dot(d,d)*1.1)*1750.0;
+  vec2 c2 = vec2(1200.0, 15200.0);
+  vec2 d2 = (p - c2)/vec2(3000.0, 1900.0);
+  base += exp(-dot(d2,d2)*1.4)*480.0;         // foothills
+  return base;
+}
+float terrainLow(vec2 p){
+  float h = 210.0;
+  h += fbm3(p*0.00062)*260.0;                 // long rolling plateau waves
+  h += fbm3(p*0.0035)*46.0;                   // small hills
+  h += hermon(p);
+  float lm = lakeMask(p);
+  h = mix(h, -60.0, smoothstep(0.0,1.0,lm));  // carve the basin, cliffs at the rim
+  return h;
+}
+float terrain(vec2 p){
+  float h = 210.0;
+  h += fbm(p*0.00062)*260.0;
+  h += fbm(p*0.0035)*46.0;
+  h += fbm(p*0.016)*7.0;                      // ground detail
+  h += hermon(p);
+  float lm = lakeMask(p);
+  h = mix(h, -60.0, smoothstep(0.0,1.0,lm));
+  return h;
+}
+
+/* ---------- raymarch ---------- */
+float march(vec3 ro, vec3 rd, float jit, out vec3 hit){
+  float t = 1.0 + jit*4.0;
+  float lh = 0.0, ly = 0.0;
+  for(int i=0;i<230;i++){
+    vec3 p = ro + rd*t;
+    float h = (t < 2400.0) ? terrain(p.xz) : terrainLow(p.xz);
+    if(p.y < h){
+      // interpolate back for a clean hit
+      float tt = t - (t*0.0055 + 1.0) * (h - p.y)/((h - p.y) - (lh - ly));
+      hit = ro + rd*tt;
+      return tt;
+    }
+    lh = h; ly = p.y;
+    t += t*0.0055 + 1.0 + max(0.0,(p.y-h))*0.20;
+    if(t > 34000.0) break;
+  }
+  return -1.0;
+}
+vec3 calcNormal(vec2 p, float t){
+  float e = 0.06*t + 0.9;
+  float hC = terrain(p);
+  float hX = terrain(p+vec2(e,0.0));
+  float hZ = terrain(p+vec2(0.0,e));
+  return normalize(vec3(hC-hX, e, hC-hZ));
+}
+
+/* ---------- palette ---------- */
+const vec3 SUN      = normalize(vec3(0.60, 0.15, 0.66));   // low in the north-east, ahead
+const vec3 SUN_COL  = vec3(1.00, 0.78, 0.46);
+const vec3 SKY_HOR  = vec3(0.94, 0.66, 0.34);
+const vec3 SKY_TOP  = vec3(0.12, 0.21, 0.40);
+const vec3 HAZE     = vec3(0.86, 0.66, 0.42);
+
+vec3 skyColor(vec3 rd){
+  float y = clamp(rd.y, 0.0, 1.0);
+  vec3 col = mix(SKY_HOR, SKY_TOP, pow(y, 0.58));
+  float s = max(dot(rd, SUN), 0.0);
+  col += SUN_COL * (pow(s, 700.0)*9.0 + pow(s, 90.0)*0.55 + pow(s, 7.0)*0.28);
+  // thin dawn cirrus
+  if(rd.y > 0.02){
+    vec2 cp = rd.xz/(rd.y+0.12);
+    float cl = fbm3(cp*vec2(1.6,5.0) + vec2(0.0, uTime*0.004));
+    cl = smoothstep(0.58, 0.85, cl) * smoothstep(0.32, 0.12, rd.y) * 0.5;
+    col = mix(col, vec3(1.0,0.83,0.62), cl);
+  }
+  return col;
+}
+
+/* ---------- farm plots near Natur ---------- */
+vec3 landColor(vec3 p, vec3 n, float t){
+  float g = fbm3(p.xz*0.011);
+  g = mix(g, fbm3(p.xz*0.055), 0.35);          // finer grass texture up close
+  // dry summer grass of the plateau
+  vec3 grass = mix(vec3(0.55,0.44,0.24), vec3(0.68,0.55,0.30), g);
+  // olive-green shrub patches
+  float veg = smoothstep(0.55, 0.75, fbm3(p.xz*0.0021+7.3));
+  grass = mix(grass, vec3(0.30,0.34,0.17), veg*0.65);
+  // basalt breaking through on the steep and the high
+  float steep = 1.0 - smoothstep(0.55, 0.86, n.y);
+  vec3 rock = mix(vec3(0.16,0.14,0.12), vec3(0.24,0.21,0.18), fbm3(p.xz*0.03));
+  vec3 col = mix(grass, rock, steep);
+
+  // cultivated plots: a quiet quilt on the flats around the farm
+  float flat_ = smoothstep(0.93, 0.972, n.y);
+  vec2 farm = (p.xz - vec2(200.0, 2600.0))/vec2(2200.0, 2400.0);
+  float fz = (1.0 - smoothstep(0.5, 1.05, length(farm))) * flat_;
+  if(fz > 0.01){
+    vec2 cell = floor(p.xz/vec2(190.0, 240.0));
+    float ch = hash(cell);
+    vec3 plot = mix(vec3(0.62,0.50,0.26), vec3(0.36,0.42,0.20), step(0.45,ch));      // wheat / green
+    plot = mix(plot, vec3(0.42,0.32,0.20), step(0.8,ch));                             // ploughed earth
+    // vineyard rows on some plots
+    float rows = smoothstep(0.35,0.65, sin(p.x*0.16 + ch*40.0)*0.5+0.5);
+    plot = mix(plot, plot*0.78, rows * step(0.75,fract(ch*7.0)) * 0.5);
+    // plot borders
+    vec2 fr = fract(p.xz/vec2(190.0, 240.0));
+    float border = smoothstep(0.0,0.035,fr.x)*smoothstep(1.0,0.965,fr.x)
+                 * smoothstep(0.0,0.028,fr.y)*smoothstep(1.0,0.972,fr.y);
+    plot *= mix(0.68, 1.0, border);
+    col = mix(col, plot, fz*0.85);
+  }
+
+  // Hermon snow streaks up high
+  float snow = smoothstep(1450.0, 1800.0, p.y + fbm3(p.xz*0.02)*180.0);
+  col = mix(col, vec3(0.93,0.92,0.90), snow*smoothstep(0.6,0.9,n.y));
+  return col;
+}
+
+void main(){
+  vec2 q = (gl_FragCoord.xy - 0.5*uRes)/uRes.y;
+  vec3 rd = normalize(uCamRot * normalize(vec3(q, 1.35)));
+  vec3 ro = uCamPos;
+  float jit = hash(gl_FragCoord.xy + fract(uTime)*17.0);
+
+  vec3 col;
+  vec3 hit;
+  float t = march(ro, rd, jit, hit);
+
+  // analytic water plane inside the basin
+  float tw = -1.0;
+  if(rd.y < -0.001){
+    float twc = (WATER - ro.y)/rd.y;
+    if(twc > 0.0){
+      vec3 wp = ro + rd*twc;
+      if(lakeMask(wp.xz) > 0.35) tw = twc;
+    }
+  }
+
+  if(tw > 0.0 && (t < 0.0 || tw < t)){
+    /* ------- the Kinneret ------- */
+    vec3 wp = ro + rd*tw;
+    vec2 wn2 = vec2(
+      fbm3(wp.xz*0.012 + uTime*0.06),
+      fbm3(wp.xz*0.012 + 3.7 - uTime*0.05)) - 0.5;
+    vec3 wn = normalize(vec3(wn2.x*0.06, 1.0, wn2.y*0.06));
+    vec3 rr = reflect(rd, wn);
+    rr.y = abs(rr.y);
+    vec3 refl = skyColor(rr) * vec3(0.88,0.93,1.05);
+    float fres = pow(1.0 - max(dot(-rd, wn), 0.0), 3.0);
+    vec3 deep = vec3(0.045,0.115,0.145);
+    col = mix(deep, refl, 0.10 + 0.90*fres);
+    float glint = pow(max(dot(rr, SUN), 0.0), 700.0);
+    col += SUN_COL * glint * 26.0;
+    float fog = 1.0 - exp(-tw*0.00006);
+    col = mix(col, HAZE, pow(fog,1.6));
+  } else if(t > 0.0){
+    /* ------- the land ------- */
+    vec3 n = calcNormal(hit.xz, t);
+    vec3 alb = landColor(hit, n, t);
+    float dif = clamp(dot(n, SUN), 0.0, 1.0);
+    // soft long-shadow approximation at dawn: occlude by terrain toward sun
+    float sh = 1.0;
+    float st = 12.0;
+    for(int i=0;i<10;i++){
+      vec3 sp = hit + SUN*st;
+      float hh = terrainLow(sp.xz);
+      sh = min(sh, 0.5 + 8.0*(sp.y - hh)/st);
+      st *= 1.9;
+    }
+    sh = clamp(sh, 0.0, 1.0);
+    vec3 lig = SUN_COL*1.5*dif*sh
+             + vec3(0.36,0.43,0.56)*(0.55+0.45*n.y)*0.42     // sky fill
+             + HAZE*0.13*clamp(dot(n,-SUN),0.0,1.0);          // warm bounce
+    col = alb * lig;
+    float fog = 1.0 - exp(-t*0.000085);
+    float sunAmt = pow(max(dot(rd,SUN),0.0), 6.0);
+    vec3 fogCol = mix(HAZE*0.9, SUN_COL, sunAmt*0.7);
+    col = mix(col, fogCol, pow(fog,1.3));
+  } else {
+    col = skyColor(rd);
+  }
+
+  // dawn grade: lift shadows warm, gentle filmic curve, a breath more colour
+  col *= 1.18;
+  col = col / (1.0 + col*0.35);
+  col = pow(col, vec3(0.92, 0.96, 1.02));
+  float luma = dot(col, vec3(0.299,0.587,0.114));
+  col = mix(vec3(luma), col, 1.14);
+  col *= 1.0 - 0.18*pow(length(q)*1.15, 2.6);   // in-shader vignette
+  col = mix(col, vec3(1.0, 0.92, 0.74), uFade); // ascent into the light
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+/* ---------------- GL plumbing ---------------- */
+let prog=null, uni={};
+function makeShader(type, src){
+  const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+  if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+  return s;
+}
+function initGL(){
+  if(!gl) return false;
+  const vs = makeShader(gl.VERTEX_SHADER, VSRC);
+  const fs = makeShader(gl.FRAGMENT_SHADER, FSRC);
+  if(!vs || !fs) return false;
+  prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog, gl.LINK_STATUS)){ console.error(gl.getProgramInfoLog(prog)); return false; }
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const aP = gl.getAttribLocation(prog, 'aP');
+  gl.enableVertexAttribArray(aP);
+  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+  ['uRes','uTime','uCamPos','uCamRot','uFade'].forEach(n => uni[n] = gl.getUniformLocation(prog, n));
+  return true;
+}
+
+let scale = Math.min(window.devicePixelRatio||1, 1.6) * 0.7;
+const isMobile = matchMedia('(max-width:700px)').matches;
+if(isMobile) scale = Math.min(window.devicePixelRatio||1, 2) * 0.42;
+function resize(){
+  canvas.width  = Math.round(innerWidth  * scale);
+  canvas.height = Math.round(innerHeight * scale);
+  if(gl) gl.viewport(0,0,canvas.width,canvas.height);
+}
+addEventListener('resize', resize);
+
+/* ---------------- camera path ----------------
+   keyframes: [time, pos(x,y,z), look(x,y,z), bank(rad)]              */
+const PATH = [
+  [  0, [  150,1100,  -900], [ -150, 100, 1500], 0.00],
+  [ 22, [  150, 600,   600], [ -100, 100, 2600], 0.00],
+  [ 48, [  250, 420,  2000], [  100, 160, 4200],-0.02],   // over the farm plots
+  [ 70, [ -450, 500,  3400], [-2600,  40, 4600],-0.10],   // bank west toward the lake
+  [ 92, [-1250, 560,  4900], [-4200,  10, 5200],-0.06],   // Kinneret glinting
+  [112, [ -700, 760,  6400], [  900, 700,12000], 0.07],   // turn back north-east
+  [136, [  100,1150,  7900], [ 2200,1700,17000], 0.03],   // Hermon on the horizon
+  [158, [  300,1600,  9200], [ 2200,2000,17400], 0.00],   // climbing, the wide view
+  [178, [  500,2250, 10300], [ 3400,3200,17400], 0.00],   // into the light
+];
+function smoother(x){ return x*x*x*(x*(x*6-15)+10); }
+function lerp3(a,b,f){ return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f, a[2]+(b[2]-a[2])*f]; }
+function camAt(t){
+  t = Math.max(0, Math.min(FLIGHT_T, t));
+  let i = 0;
+  while(i < PATH.length-2 && PATH[i+1][0] <= t) i++;
+  const A = PATH[i], B = PATH[i+1];
+  const f = smoother(Math.min(1, Math.max(0,(t - A[0])/(B[0]-A[0]))));
+  const pos  = lerp3(A[1], B[1], f);
+  const look = lerp3(A[2], B[2], f);
+  const bank = A[3]+(B[3]-A[3])*f;
+  // breathing: a slow gentle sway so the flight feels alive
+  pos[1] += Math.sin(t*0.31)*6;
+  pos[0] += Math.sin(t*0.23)*5;
+  return {pos, look, bank};
+}
+function camMatrix(pos, look, bank){
+  let f = [look[0]-pos[0], look[1]-pos[1], look[2]-pos[2]];
+  const fl = Math.hypot(f[0],f[1],f[2]); f = f.map(v=>v/fl);
+  let up = [Math.sin(bank), Math.cos(bank), 0];
+  let r = [ f[1]*up[2]-f[2]*up[1], f[2]*up[0]-f[0]*up[2], f[0]*up[1]-f[1]*up[0] ];
+  const rl = Math.hypot(r[0],r[1],r[2]); r = r.map(v=>-v/rl);
+  const u = [ f[1]*r[2]-f[2]*r[1], f[2]*r[0]-f[0]*r[2], f[0]*r[1]-f[1]*r[0] ];
+  return new Float32Array([ r[0],r[1],r[2],  u[0],u[1],u[2],  f[0],f[1],f[2] ]);
+}
+
+/* ---------------- captions ---------------- */
+const SCRIPT = [
+  { t:   6, d: 12, k:'the ask',        h:'One of the watchmen wrote to me this week.<br>She asked, <em>can you show us the land from the air?</em>' },
+  { t:  20, d: 11, k:'the ask',        h:'The sky here is a watched sky. We live close to the border.<br>No drone of mine may cross it.' },
+  { t:  33, d:  8, k:'the ask',        h:'So I asked for other wings.' },
+  { t:  44, d: 12, k:'the plateau',    h:'These hills are basalt. Old fire that cooled<br>and learned to grow wheat.' },
+  { t:  58, d: 12, k:'natur',          h:'Below us, the fields of Natur.<br>Our farm is one of the small squares of gold.' },
+  { t:  74, d: 12, k:'the kinneret',   h:'West of us the Kinneret is catching the first sun.<br>The whole lake answers it.' },
+  { t:  90, d: 11, k:'the kinneret',   h:'Every rain that falls on these hills<br>finds its way down to that water.' },
+  { t: 106, d: 12, k:'north',          h:'And to the north, Hermon.<br>In winter he wears white and gives everyone to drink.' },
+  { t: 122, d: 13, k:'the keeper',     h:'Now look at all of it at once.<br>This is not my view. This is His.' },
+  { t: 139, d: 14, k:'the keeper',     h:'<em>The eyes of the LORD your God are always upon it,<br>from the beginning of the year to the end of the year.</em>' },
+  { t: 157, d: 13, k:'the keeper',     h:'The land is watched, day and night.<br>And so are you, watchman on the wall.' },
+];
+const capLine = document.getElementById('cap-line');
+const stationEl = document.getElementById('station');
+const stationK = document.getElementById('station-k');
+let curCap = -1, capVisible = false;
+function updateCaptions(t){
+  let idx = -1;
+  for(let i=0;i<SCRIPT.length;i++){
+    if(t >= SCRIPT[i].t && t < SCRIPT[i].t + SCRIPT[i].d) { idx = i; break; }
+  }
+  if(idx !== curCap){
+    if(idx === -1){ capLine.classList.remove('on'); capVisible=false; }
+    else {
+      const swap = () => {
+        capLine.innerHTML = SCRIPT[idx].h;
+        capLine.classList.add('on');
+        stationK.textContent = SCRIPT[idx].k;
+        stationEl.classList.add('on');
+      };
+      if(capVisible){ capLine.classList.remove('on'); setTimeout(swap, 700); }
+      else swap();
+      capVisible = true;
+    }
+    curCap = idx;
+  }
+  if(t > FLIGHT_T - 8) stationEl.classList.remove('on');
+}
+
+/* ---------------- ambient sound ---------------- */
+let audio = null, audioOn = true;
+function startAudio(){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AC();
+    const master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+
+    // wind: filtered noise with a slow wandering cutoff
+    const len = ctx.sampleRate * 4;
+    const nb = ctx.createBuffer(1, len, ctx.sampleRate);
+    const ch = nb.getChannelData(0);
+    for(let i=0;i<len;i++) ch[i] = Math.random()*2-1;
+    const noise = ctx.createBufferSource(); noise.buffer = nb; noise.loop = true;
+    const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 420; lp.Q.value = 0.4;
+    const windGain = ctx.createGain(); windGain.gain.value = 0.16;
+    noise.connect(lp); lp.connect(windGain); windGain.connect(master);
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.05;
+    const lfoG = ctx.createGain(); lfoG.gain.value = 190;
+    lfo.connect(lfoG); lfoG.connect(lp.frequency); lfo.start();
+
+    // drone: warm open fifth, barely there
+    const droneG = ctx.createGain(); droneG.gain.value = 0.05; droneG.connect(master);
+    [[73.42,0],[110.0,2],[146.83,-3],[220.0,1]].forEach(([f,det])=>{
+      const o = ctx.createOscillator(); o.type='sine'; o.frequency.value=f; o.detune.value=det*4;
+      const g = ctx.createGain(); g.gain.value = f > 200 ? 0.35 : 1.0;
+      o.connect(g); g.connect(droneG); o.start();
+    });
+
+    noise.start();
+    master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 5);
+    audio = {ctx, master};
+  }catch(e){ audio = null; }
+}
+function setAudio(on){
+  audioOn = on;
+  document.getElementById('sound').textContent = on ? 'Sound on' : 'Sound off';
+  if(audio) audio.master.gain.linearRampToValueAtTime(on ? 0.85 : 0.0, audio.ctx.currentTime + 0.8);
+}
+
+/* ---------------- flight clock & loop ---------------- */
+const qs = new URLSearchParams(location.search);
+const DEBUG_T = qs.has('t') ? parseFloat(qs.get('t')) : null;
+const STILL   = qs.has('still');
+
+let started = false, startWall = 0, offset = 0, closed = false;
+const glOK = initGL();
+if(!glOK){ document.getElementById('fallback').style.display='block'; canvas.style.display='none'; }
+resize();
+
+function flightTime(){
+  if(STILL && DEBUG_T !== null) return DEBUG_T;
+  return (performance.now() - startWall)/1000 + offset;
+}
+let lastFrame = 0, slowFrames = 0;
+function frame(now){
+  requestAnimationFrame(frame);
+  if(!started){
+    // the land waits quietly behind the title
+    if(glOK){
+      const c0 = camAt(0);
+      gl.uniform2f(uni.uRes, canvas.width, canvas.height);
+      gl.uniform1f(uni.uTime, 0);
+      gl.uniform3f(uni.uCamPos, c0.pos[0], c0.pos[1], c0.pos[2]);
+      gl.uniformMatrix3fv(uni.uCamRot, false, camMatrix(c0.pos, c0.look, c0.bank));
+      gl.uniform1f(uni.uFade, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    return;
+  }
+  const t = flightTime();
+
+  // adaptive quality: if we chug, render smaller
+  if(lastFrame && now-lastFrame > 46 && scale > 0.3){
+    if(++slowFrames > 24){ scale *= 0.86; resize(); slowFrames = 0; }
+  } else if(slowFrames > 0) slowFrames--;
+  lastFrame = now;
+
+  updateCaptions(t);
+  document.getElementById('progress').style.width = Math.min(100, t/FLIGHT_T*100) + '%';
+
+  if(t >= FLIGHT_T && !closed){
+    closed = true;
+    document.getElementById('close').classList.add('on');
+    capLine.classList.remove('on');
+  }
+
+  if(glOK){
+    const c = camAt(Math.min(t, FLIGHT_T));
+    const fade = Math.max(0, Math.min(1, (t - (FLIGHT_T-10))/10)) * 0.85;
+    gl.uniform2f(uni.uRes, canvas.width, canvas.height);
+    gl.uniform1f(uni.uTime, t);
+    gl.uniform3f(uni.uCamPos, c.pos[0], c.pos[1], c.pos[2]);
+    gl.uniformMatrix3fv(uni.uCamRot, false, camMatrix(c.pos, c.look, c.bank));
+    gl.uniform1f(uni.uFade, fade);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+}
+requestAnimationFrame(frame);
+
+function begin(){
+  if(started) return;
+  started = true;
+  startWall = performance.now();
+  offset = DEBUG_T !== null ? DEBUG_T : 0;
+  document.getElementById('gate').classList.add('gone');
+  document.getElementById('ui').classList.add('on');
+  if(!DEBUG_T) startAudio();
+}
+document.getElementById('begin').addEventListener('click', begin);
+document.getElementById('sound').addEventListener('click', ()=> setAudio(!audioOn));
+document.getElementById('skip').addEventListener('click', ()=>{
+  offset = FLIGHT_T - (performance.now()-startWall)/1000;
+});
+document.getElementById('again').addEventListener('click', ()=>{
+  closed = false; curCap = -1; capVisible = false;
+  document.getElementById('close').classList.remove('on');
+  startWall = performance.now(); offset = 0;
+});
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden && audio && audioOn) audio.master.gain.value = 0;
+  else if(audio && audioOn) audio.master.gain.linearRampToValueAtTime(0.85, audio.ctx.currentTime+1);
+});
+
+// debug: ?t=80 jumps straight into the flight at t=80 (&still freezes it)
+if(DEBUG_T !== null) begin();
+</script>
+</body>
+</html>
