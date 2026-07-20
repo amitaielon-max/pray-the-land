@@ -15,3 +15,9 @@
   from = "/films"
   to = "/films.html"
   status = 301
+
+# short URL used in the From Above broadcast letter
+[[redirects]]
+  from = "/from-above"
+  to = "/from-above.html"
+  status = 301
