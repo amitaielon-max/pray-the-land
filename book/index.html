@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walking into the Pages · The Site Library · Pray the Land</title>
+<meta name="description" content="Sixty-five holy sites, from Dan to Beersheba and down to the Red Sea. The full scripture, the geography, the living people, one Hebrew word, one question, and a prayer for every place your feet will stand.">
+<meta property="og:title" content="Walking into the Pages · A Companion to the Land of the Bible">
+<meta property="og:description" content="Sixty-five holy sites from Dan to the Red Sea. Read it online, one page a day, or download the whole book free.">
+<meta property="og:type" content="book">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#15110D; --basalt-2:#211C17; --basalt-3:#2C2620;
+    --parchment:#FAF6EC; --parchment-dim:#E8DEC6;
+    --gold:#C9A227; --gold-soft:#D9B23F; --gold-deep:#7a6420;
+    --olive:#222B16; --ink:#221e19; --warm-white:#EAE2CE; --muted:#b3a890;
+    --display:'Cormorant Garamond',Georgia,serif;
+    --body:'Frank Ruhl Libre',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--basalt);color:var(--parchment-dim);line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:13px clamp(18px,4vw,44px);background:rgba(21,17,13,.94);border-bottom:1px solid #3a322a;backdrop-filter:blur(8px)}
+  nav .brand{font-family:var(--display);font-size:20px;color:var(--warm-white);letter-spacing:.02em;text-decoration:none;white-space:nowrap}
+  nav .brand span{color:var(--gold)}
+  nav .links{display:flex;gap:20px;align-items:center}
+  nav .links a{color:var(--parchment-dim);text-decoration:none;font-size:13px;letter-spacing:.04em;transition:color .2s;white-space:nowrap}
+  nav .links a:hover{color:var(--gold)}
+  nav .links a.pdfl{border:1px solid var(--gold);color:var(--gold);padding:7px 14px;border-radius:2px}
+  nav .links a.pdfl:hover{background:rgba(201,162,39,.14)}
+  @media(max-width:560px){ nav .links a.home{display:none} }
+
+  .btn{font-family:var(--body);font-weight:700;font-size:14px;letter-spacing:.06em;text-decoration:none;cursor:pointer;border:0;
+    padding:14px 28px;border-radius:2px;display:inline-block;transition:transform .2s ease,background .2s ease}
+  .btn-gold{background:var(--gold);color:var(--basalt)}
+  .btn-gold:hover{transform:translateY(-2px);background:var(--gold-soft)}
+  .btn-ghost{border:1px solid var(--gold);color:var(--gold);background:transparent}
+  .btn-ghost:hover{background:rgba(201,162,39,.12);transform:translateY(-2px)}
+  .seam{height:3px;background:linear-gradient(90deg,transparent,var(--gold) 18%,var(--gold) 82%,transparent);opacity:.85}
+
+  /* ---------- HOME ---------- */
+  .hero{min-height:78svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    padding:130px 24px 70px;position:relative;overflow:hidden;background:#0f0c08}
+  .hero .glow{position:absolute;inset:0;background:radial-gradient(120% 75% at 50% 105%, rgba(217,178,63,.22) 0%, transparent 60%)}
+  .hero>*{position:relative}
+  .hero h1{font-family:var(--display);color:var(--warm-white);font-weight:500;font-size:clamp(44px,9vw,96px);line-height:1.02;margin:18px 0 0}
+  .hero .sub{font-family:var(--display);font-style:italic;color:var(--parchment-dim);font-size:clamp(18px,3vw,28px);margin-top:14px}
+  .hero .verse{color:var(--warm-white);max-width:560px;margin:30px auto 0;font-style:italic;font-size:clamp(15px,2vw,18px)}
+  .hero .vref{color:var(--gold);letter-spacing:.2em;font-size:11px;margin-top:10px}
+  .hero .cta{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .progress-note{margin-top:22px;font-size:14px;color:var(--muted)}
+  .progress-note b{color:var(--gold)}
+
+  .how{background:var(--parchment);color:var(--ink);text-align:center;padding:clamp(56px,8vw,100px) clamp(22px,6vw,80px)}
+  .how h2{font-family:var(--display);font-weight:500;font-size:clamp(28px,4.4vw,44px);color:var(--basalt)}
+  .how .lead{max-width:660px;margin:20px auto 0;font-size:clamp(16px,1.8vw,19px)}
+  .how .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;max-width:900px;margin:40px auto 0;text-align:left}
+  .how .step{background:#fff;border:1px solid #e0d7c0;border-radius:3px;padding:18px 18px 16px}
+  .how .step .k{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+  .how .step .t{font-family:var(--display);font-size:19px;color:var(--basalt);margin-top:6px;line-height:1.25}
+
+  /* ---------- TOC ---------- */
+  .toc{padding:120px clamp(20px,5vw,60px) 90px;max-width:980px;margin:0 auto}
+  .toc-head{text-align:center;margin-bottom:14px}
+  .toc h1{font-family:var(--display);font-weight:500;color:var(--warm-white);font-size:clamp(34px,6vw,58px);margin-top:12px}
+  .toc .tsub{font-family:var(--display);font-style:italic;color:var(--muted);font-size:clamp(16px,2.4vw,21px);margin-top:8px}
+  .bar-wrap{max-width:520px;margin:26px auto 40px;text-align:center}
+  .bar{height:5px;background:#3a322a;border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));width:0;transition:width .6s ease}
+  .bar-wrap .lbl{font-size:12.5px;letter-spacing:.08em;color:var(--muted);margin-top:9px}
+  .bar-wrap .lbl b{color:var(--gold)}
+  .region{margin:38px 0 0}
+  .region h2{font-family:var(--display);font-weight:500;color:var(--gold);font-size:clamp(21px,3vw,27px);letter-spacing:.03em;
+    display:flex;align-items:center;gap:14px}
+  .region h2::after{content:"";flex:1;height:1px;background:#3a322a}
+  .region .rn{font-size:11px;letter-spacing:.26em;color:var(--muted);font-family:var(--body);font-weight:700}
+  .toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;margin-top:16px}
+  .toc-item{display:flex;gap:12px;align-items:baseline;background:var(--basalt-2);border:1px solid #352d25;border-radius:3px;
+    padding:13px 15px;text-decoration:none;transition:border-color .2s,transform .2s}
+  .toc-item:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .toc-item .num{font-family:var(--display);color:var(--gold);font-size:15px;min-width:22px;text-align:right}
+  .toc-item .t{color:var(--warm-white);font-size:15.5px;line-height:1.35}
+  .toc-item .s{display:block;color:var(--muted);font-size:12.5px;font-style:italic;margin-top:2px}
+  .toc-item.done .num{color:var(--gold-soft)}
+  .toc-item .tick{margin-left:auto;color:var(--gold);font-size:13px;opacity:0;align-self:center}
+  .toc-item.done .tick{opacity:1}
+
+  /* ---------- READER ---------- */
+  .reader{max-width:760px;margin:0 auto;padding:112px clamp(20px,5vw,44px) 60px}
+  .crumbs{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;letter-spacing:.06em;color:var(--muted);gap:10px}
+  .crumbs a{text-decoration:none;color:var(--muted)}
+  .crumbs a:hover{color:var(--gold)}
+  .site-head{text-align:center;margin:34px 0 8px}
+  .site-head h1{font-family:var(--display);font-weight:500;color:var(--warm-white);font-size:clamp(36px,6.4vw,60px);line-height:1.08;margin-top:12px}
+  .site-head .sub{font-family:var(--display);font-style:italic;color:var(--muted);font-size:clamp(16px,2.6vw,22px);margin-top:10px}
+  .sec{margin-top:44px}
+  .sec .k{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:700;
+    display:flex;align-items:center;gap:14px}
+  .sec .k::after{content:"";flex:1;height:1px;background:#3a322a}
+  .sec p{margin-top:14px;font-size:clamp(16px,1.8vw,17.5px);color:var(--parchment-dim)}
+  .scripture{background:var(--basalt-2);border:1px solid #352d25;border-left:3px solid var(--gold);border-radius:3px;
+    padding:26px clamp(20px,4vw,34px) 22px;margin-top:16px}
+  .scripture p{font-family:var(--display);font-size:clamp(18px,2.4vw,21px);line-height:1.7;color:var(--warm-white);margin:0}
+  .scripture sup{color:var(--gold);font-size:.62em;font-weight:700;margin:0 3px 0 1px;font-family:var(--body)}
+  .scripture .ref{font-family:var(--body);font-size:11px;letter-spacing:.18em;color:var(--gold);margin-top:16px;text-transform:uppercase}
+  .hebrew-box{display:flex;gap:20px;align-items:flex-start;background:var(--basalt-2);border:1px solid #352d25;border-radius:3px;
+    padding:22px clamp(18px,4vw,28px);margin-top:16px;flex-wrap:wrap}
+  .hebrew-box .word{font-size:clamp(30px,5vw,40px);color:var(--gold);direction:rtl;font-family:var(--body);line-height:1.2;min-width:110px}
+  .hebrew-box p{flex:1;min-width:220px;margin:0;font-size:16px}
+  .question-box{background:var(--olive);border-radius:3px;padding:24px clamp(20px,4vw,30px);margin-top:16px}
+  .question-box p{font-family:var(--display);font-style:italic;font-size:clamp(18px,2.4vw,21px);color:var(--warm-white);margin:0;line-height:1.6}
+  .prayer-box{background:var(--parchment);color:var(--ink);border-radius:3px;padding:30px clamp(22px,5vw,38px);margin-top:16px;text-align:center}
+  .prayer-box p{font-family:var(--display);font-style:italic;font-size:clamp(18px,2.6vw,22px);line-height:1.75;color:var(--basalt);margin:0}
+  .prayed{margin-top:26px;text-align:center}
+  .prayed button{font-family:var(--body);font-weight:700;font-size:13.5px;letter-spacing:.08em;cursor:pointer;border-radius:2px;
+    padding:13px 26px;border:1px solid var(--gold);background:transparent;color:var(--gold);transition:background .2s,color .2s}
+  .prayed button:hover{background:rgba(201,162,39,.14)}
+  .prayed button.on{background:var(--gold);color:var(--basalt)}
+  .prayed .note{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .pager{display:flex;justify-content:space-between;gap:12px;margin-top:52px;border-top:1px solid #3a322a;padding-top:24px}
+  .pager a{flex:1;text-decoration:none;border:1px solid #3a322a;border-radius:3px;padding:15px 17px;transition:border-color .2s}
+  .pager a:hover{border-color:var(--gold)}
+  .pager .dir{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  .pager .pt{font-family:var(--display);color:var(--warm-white);font-size:17.5px;margin-top:4px;line-height:1.3}
+  .pager a.next{text-align:right}
+  .pager a.off{visibility:hidden}
+  @media(max-width:540px){ .pager{flex-direction:column} .pager a.next{text-align:left} .pager a.off{display:none} }
+
+  footer{background:#0f0c08;text-align:center;padding:46px 22px 54px;border-top:1px solid #2a231c}
+  footer .f1{font-family:var(--display);font-style:italic;color:var(--parchment-dim);font-size:17px}
+  footer .f2{color:var(--muted);font-size:13px;margin-top:10px;line-height:1.8}
+  footer a{color:var(--gold);text-decoration:none}
+  .view{display:none}.view.on{display:block}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/">Pray <span>the</span> Land</a>
+  <div class="links">
+    <a class="home" href="/">← Home</a>
+    <a href="#/library">The Library</a>
+    <a class="pdfl" href="walking-into-the-pages.pdf">Download PDF</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="v-home" class="view">
+  <header class="hero">
+    <div class="glow"></div>
+    <div class="eyebrow">Pray the Land · From the Golan · The Book</div>
+    <h1>Walking into<br>the Pages</h1>
+    <div class="sub">A Companion to the Land of the Bible · by Amitai (Tai) Elon</div>
+    <p class="verse">&ldquo;Now that you are here in the Holy Land, it is as if you are opening the Bible and walking into its pages. The Bible becomes three-dimensional.&rdquo;</p>
+    <div class="vref">HOW EVERY TOUR BEGINS</div>
+    <div class="cta">
+      <a class="btn btn-gold" id="btn-start" href="#/site/1">Begin at Dan</a>
+      <a class="btn btn-ghost" href="#/library">The Site Library</a>
+      <a class="btn btn-ghost" href="walking-into-the-pages.pdf">The Book · Free PDF</a>
+    </div>
+    <p class="progress-note" id="home-progress"></p>
+  </header>
+  <div class="seam"></div>
+  <section class="how">
+    <h2>Sixty-five places. One way of standing in each.</h2>
+    <p class="lead">From the springs of Dan in the north to the coral water of the Red Sea in the south. Walk it with your feet in the land, or one page a day from home &mdash; sixty-five days, praying the whole land as you go. Every page works the same way, because every visit works the same way.</p>
+    <div class="steps">
+      <div class="step"><div class="k">First</div><div class="t">Open your Bibles &mdash; we read aloud together</div></div>
+      <div class="step"><div class="k">Then</div><div class="t">The geography &mdash; why here, of all places</div></div>
+      <div class="step"><div class="k">Then</div><div class="t">The characters, as living people</div></div>
+      <div class="step"><div class="k">Then</div><div class="t">The 3D moment your own eyes can verify</div></div>
+      <div class="step"><div class="k">Then</div><div class="t">One Hebrew word that unlocks the place</div></div>
+      <div class="step"><div class="k">Then</div><div class="t">One question to carry in your pocket</div></div>
+      <div class="step"><div class="k">And always</div><div class="t">We pray, before we walk on</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- LIBRARY / TOC -->
+<div id="v-toc" class="view">
+  <div class="toc">
+    <div class="toc-head">
+      <div class="eyebrow">Walking into the Pages</div>
+      <h1>The Site Library</h1>
+      <div class="tsub">from Dan to Beersheba, and down to the Red Sea</div>
+    </div>
+    <div class="bar-wrap">
+      <div class="bar"><i id="bar-fill"></i></div>
+      <div class="lbl" id="bar-label"></div>
+    </div>
+    <div id="toc-regions"></div>
+  </div>
+</div>
+
+<!-- READER -->
+<div id="v-site" class="view">
+  <article class="reader" id="site-article"></article>
+</div>
+
+<footer>
+  <div class="f1">This book is given, not sold. Share it whole with someone who prays.</div>
+  <div class="f2">
+    Scripture from the World English Bible, public domain. &copy; 2026 Amitai (Tai) Elon &middot; Havat HaChaim &middot; Natur &middot; Golan Heights, Israel<br>
+    <a href="/">pray-the-land-golan.netlify.app</a> &middot; <a href="walking-into-the-pages.pdf">Download the whole book (PDF)</a>
+  </div>
+</footer>
+
+<script src="sites.js"></script>
+<script>
+(function(){
+  var SITES = window.BOOK_SITES || [];
+  var TOTAL = SITES.length;
+  var KEY = 'witp-prayed';
+
+  function prayed(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+  function setPrayed(list){ try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){} }
+  function isPrayed(n){ return prayed().indexOf(n) !== -1; }
+  function togglePrayed(n){
+    var p = prayed(); var i = p.indexOf(n);
+    if(i === -1) p.push(n); else p.splice(i,1);
+    setPrayed(p); return i === -1;
+  }
+  function nextUnprayed(){
+    var p = prayed();
+    for(var i=0;i<TOTAL;i++){ if(p.indexOf(SITES[i].n)===-1) return SITES[i].n; }
+    return null;
+  }
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function verses(s){ return esc(s).replace(/⟦(\d+)⟧/g,'<sup>$1</sup>'); }
+
+  // Split the hebrew field: leading Hebrew word(s) before the first '·'
+  function hebrewParts(s){
+    var i = s.indexOf('·');
+    if(i > 0 && i < 40){ return { word: s.slice(0,i).trim(), rest: s.slice(i+1).trim() }; }
+    return { word:'', rest:s };
+  }
+
+  function show(id){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+    document.getElementById(id).classList.add('on');
+    window.scrollTo(0,0);
+  }
+
+  function renderHome(){
+    var p = prayed().length;
+    var el = document.getElementById('home-progress');
+    var btn = document.getElementById('btn-start');
+    if(p > 0 && p < TOTAL){
+      var nxt = nextUnprayed();
+      var s = SITES[nxt-1];
+      el.innerHTML = 'You have prayed <b>'+p+' of '+TOTAL+'</b> pages. Today&rsquo;s page: <b>'+esc(s.title)+'</b>.';
+      btn.textContent = 'Continue · '+s.title;
+      btn.href = '#/site/'+nxt;
+    } else if(p >= TOTAL && TOTAL > 0){
+      el.innerHTML = 'You have prayed the whole land, <b>all '+TOTAL+' pages</b>, from Dan to the Red Sea.';
+      btn.textContent = 'Walk it again';
+      btn.href = '#/site/1';
+    } else {
+      el.textContent = '';
+    }
+    show('v-home');
+  }
+
+  function renderToc(){
+    var p = prayed().length;
+    document.getElementById('bar-fill').style.width = (TOTAL? Math.round(p/TOTAL*100):0)+'%';
+    document.getElementById('bar-label').innerHTML = '<b>'+p+'</b> of '+TOTAL+' pages prayed'+(p>0&&p<TOTAL? ' &middot; '+(TOTAL-p)+' to go':'');
+    var wrap = document.getElementById('toc-regions');
+    var html = '';
+    var current = null, ri = 0;
+    var roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+    SITES.forEach(function(s){
+      if(s.region !== current){
+        if(current !== null) html += '</div></div>';
+        current = s.region;
+        html += '<div class="region"><h2><span class="rn">'+roman[ri++]+'</span>'+esc(s.region)+'</h2><div class="toc-grid">';
+      }
+      html += '<a class="toc-item'+(isPrayed(s.n)?' done':'')+'" href="#/site/'+s.n+'">'
+            + '<span class="num">'+s.n+'</span>'
+            + '<span class="t">'+esc(s.title)+'<span class="s">'+esc(s.subtitle)+'</span></span>'
+            + '<span class="tick">✓ prayed</span></a>';
+    });
+    if(current !== null) html += '</div></div>';
+    wrap.innerHTML = html;
+    show('v-toc');
+  }
+
+  function pagerLink(s, cls, dir){
+    if(!s) return '<a class="'+cls+' off" aria-hidden="true"></a>';
+    return '<a class="'+cls+'" href="#/site/'+s.n+'"><span class="dir">'+dir+'</span><div class="pt">'+esc(s.title)+'</div></a>';
+  }
+
+  function renderSite(n){
+    var s = SITES[n-1];
+    if(!s){ location.hash = '#/library'; return; }
+    var hb = hebrewParts(s.hebrew);
+    var done = isPrayed(n);
+    var art = document.getElementById('site-article');
+    art.innerHTML =
+      '<div class="crumbs"><a href="#/library">← The Site Library</a><span>Page '+n+' of '+TOTAL+'</span></div>'
+    + '<div class="site-head">'
+    +   '<div class="eyebrow">'+esc(s.region)+' · Site Study</div>'
+    +   '<h1>'+esc(s.title)+'</h1>'
+    +   '<div class="sub">'+esc(s.subtitle)+'</div>'
+    + '</div>'
+    + '<div class="sec"><div class="k">Open your Bibles · we read aloud together</div>'
+    +   '<div class="scripture"><p>'+verses(s.scripture)+'</p><div class="ref">'+esc(s.ref)+'</div></div></div>'
+    + '<div class="sec"><div class="k">The geography · why here of all places</div><p>'+esc(s.geography)+'</p></div>'
+    + '<div class="sec"><div class="k">The characters, as living people</div><p>'+esc(s.characters)+'</p></div>'
+    + '<div class="sec"><div class="k">The 3D moment</div><p>'+esc(s.moment)+'</p></div>'
+    + '<div class="sec"><div class="k">The Hebrew word</div>'
+    +   '<div class="hebrew-box">'+(hb.word? '<div class="word">'+esc(hb.word)+'</div>':'')+'<p>'+esc(hb.rest)+'</p></div></div>'
+    + '<div class="sec"><div class="k">One question to carry</div><div class="question-box"><p>'+esc(s.question)+'</p></div></div>'
+    + '<div class="sec"><div class="k">We pray, before we walk on</div><div class="prayer-box"><p>'+esc(s.prayer)+'</p></div></div>'
+    + '<div class="prayed">'
+    +   '<button id="btn-prayed" class="'+(done?'on':'')+'">'+(done? '✓ Prayed at '+esc(s.title):'I prayed this page')+'</button>'
+    +   '<div class="note">Your walk is saved on this device. One page a day, sixty-five days through the whole land.</div>'
+    + '</div>'
+    + '<div class="pager">'
+    +   pagerLink(SITES[n-2], 'prev', '← Previous')
+    +   pagerLink(SITES[n], 'next', 'Next →')
+    + '</div>';
+    document.getElementById('btn-prayed').addEventListener('click', function(){
+      var on = togglePrayed(n);
+      this.classList.toggle('on', on);
+      this.textContent = on ? '✓ Prayed at '+s.title : 'I prayed this page';
+    });
+    show('v-site');
+  }
+
+  function route(){
+    var h = location.hash || '#/';
+    var m = h.match(/^#\/site\/(\d+)/);
+    if(m) return renderSite(parseInt(m[1],10));
+    if(h.indexOf('#/library') === 0) return renderToc();
+    renderHome();
+  }
+
+  document.addEventListener('keydown', function(e){
+    var m = (location.hash||'').match(/^#\/site\/(\d+)/);
+    if(!m || e.altKey || e.metaKey || e.ctrlKey) return;
+    var n = parseInt(m[1],10);
+    if(e.key === 'ArrowRight' && n < TOTAL) location.hash = '#/site/'+(n+1);
+    if(e.key === 'ArrowLeft' && n > 1) location.hash = '#/site/'+(n-1);
+  });
+
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
